@@ -1,0 +1,13 @@
+html {
+  scroll-behavior: smooth;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body, #root, #__next, .portfolio-root, main {
+  background-color: #ffffff !important; /* A soft off-white that complements the warm tones of your portfolio */
+  color: #1a1612; /* A deep dark brown/charcoal matches beautifully instead of pure black */
+  overflow-x: hidden; /* Prevents unwanted horizontal scrolling on mobile */
+}

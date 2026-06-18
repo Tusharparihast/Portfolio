@@ -1,0 +1,23 @@
+[
+  {
+    "id": "ai-schools",
+    "title": "The Evolving Lens: AI's Footprint in Modern Education Systems",
+    "date": "Dec 2025",
+    "readTime": "5 min read",
+    "image": "https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "id": "computer-vision-cattle",
+    "title": "Spatial Metrics: Decoding Cattle Contours via Non-Invasive Computer Vision Pipelines",
+    "date": "Jan 2026",
+    "readTime": "8 min read",
+    "image": "https://images.unsplash.com/photo-1570042225831-d98fa7577f1e?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "id": "anomaly-trees",
+    "title": "Unsupervised Ensembles: Benchmarking Isolation Trees on Highly Skewed Datasets",
+    "date": "Feb 2026",
+    "readTime": "6 min read",
+    "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=400&q=80"
+  }
+]

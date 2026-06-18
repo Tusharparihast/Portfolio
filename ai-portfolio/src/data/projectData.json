@@ -1,0 +1,22 @@
+[
+  {
+    "id": "cattle-bcs",
+    "title": "Automated Cattle Body Condition Scoring",
+    "domain": "Computer Vision / Deep Learning",
+    "shortDescription": "An end-to-end computer vision pipeline utilizing OpenCV to detect anatomical landmarks on cattle for automated body condition health assessments.",
+    "longDescription": "Developed a custom image parsing workflow to extract contours from cattle pin bones, thurls, and hook bones. Implemented regression heads to convert spatial coordinates into standardized body condition metrics, reducing subjective veterinary evaluation errors.",
+    "tech": ["Python", "OpenCV", "PyTorch", "Ubuntu"],
+    "metrics": "92% Accuracy across diverse breeds",
+    "github": "https://github.com/yourusername/cattle-bcs"
+  },
+  {
+    "id": "fraud-detection",
+    "title": "Credit Card Anomaly Detection Engine",
+    "domain": "Machine Learning / Analytics",
+    "shortDescription": "A comparative analysis implementing Isolation Forests and Local Outlier Factors to isolate highly skewed fraudulent patterns.",
+    "longDescription": "Leveraged highly imbalanced Kaggle financial data arrays. Designed processing workflows to counter data drift and benchmarked multi-tier ensemble unsupervised trees to optimize recall windows for fraud handlers.",
+    "tech": ["Python", "Scikit-Learn", "Pandas", "Matplotlib"],
+    "metrics": "0.94 ROC-AUC score",
+    "github": "https://github.com/yourusername/fraud-anomaly"
+  }
+]
