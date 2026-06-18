@@ -47,7 +47,7 @@ export default function TimelineAndCards() {
         {/* LEFT COLUMN: ACADEMICS & TIMELINE (Takes 5 cols on large screens) */}
         <div className="lg:col-span-5">
           <h3 className="text-2xl font-bold text-slate-900 tracking-tight mb-8 flex items-center gap-2">
-            <FiActivity className="text-blue-600" /> Education & Roles
+            <FiActivity className="text-blue-600" /> Education
           </h3>
           
           <div className="relative border-l-2 border-slate-100 pl-6 space-y-10">
