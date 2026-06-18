@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
@@ -9,8 +9,9 @@ import Footer from './components/Footer';
 import ProjectDetails from './components/ProjectDetails';
 import BlogDetails from './components/BlogDetails'; 
 import ScrollToTop from './components/ScrollToTop';
-import WelcomeScreen from './components/WelcomeScreen'; // Your CatSplash component
+import WelcomeScreen from './components/WelcomeScreen'; 
 import TimelineAndCards from './components/TimeLineAndCards';
+
 function MainDashboard() {
   return (
     <div id="top">
@@ -26,16 +27,31 @@ function MainDashboard() {
 export default function App() {
   const [loading, setLoading] = useState(true);
 
+  // CRITICAL FIX: Kill the browser's scroll memory before components mount
+  useEffect(() => {
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
+    
+    // Force a structural fallback jump to the absolute top coordinates
+    window.scrollTo(0, 0);
+  }, []);
+
+  // SECONDARY FIX: Force scroll alignment the exact instant the welcome loader finishes
+  const handleWelcomeComplete = () => {
+    setLoading(false);
+    setTimeout(() => {
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    }, 0);
+  };
+
   return (
     <Router>
       <ScrollToTop /> 
 
-      {/* FIX 1: Changed prop from onComplete to onDone to match your component internal hook */}
-      {loading && <WelcomeScreen onDone={() => setLoading(false)} />}
+      {loading && <WelcomeScreen onDone={handleWelcomeComplete} />}
 
       <main className="relative min-h-screen w-full selection:bg-blue-500 selection:text-white bg-white">
-        
-        {/* FIX 2: Removed !loading so the Navbar renders beautifully underneath the overlay immediately */}
         <Navbar />
 
         <div className="relative z-10">
@@ -46,7 +62,6 @@ export default function App() {
           </Routes>
         </div>
 
-        {/* FIX 3: Removed !loading so the Footer renders beautifully in your static DOM tree layout */}
         <Footer />
       </main>
     </Router>
