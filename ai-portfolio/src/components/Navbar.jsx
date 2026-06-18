@@ -43,6 +43,7 @@ export default function Navbar() {
 
   const navLinks = [
     { title: 'About', path: '/#about' },
+    { title: 'My Journey', path: '/#journey' },
     { title: 'Projects', path: '/#projects' },
     { title: 'Insights', path: '/#blog' },
     { title: 'Contact', path: '/#contact' },
