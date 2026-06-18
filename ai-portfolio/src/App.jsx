@@ -10,12 +10,13 @@ import ProjectDetails from './components/ProjectDetails';
 import BlogDetails from './components/BlogDetails'; 
 import ScrollToTop from './components/ScrollToTop';
 import WelcomeScreen from './components/WelcomeScreen'; // Your CatSplash component
-
+import TimelineAndCards from './components/TimeLineAndCards';
 function MainDashboard() {
   return (
     <div id="top">
       <Hero />
       <About />
+      <TimelineAndCards />
       <Projects />
       <BlogMarquee />
     </div>

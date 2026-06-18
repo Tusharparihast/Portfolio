@@ -56,6 +56,17 @@
   }
 }
 
+.navbar-glass {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  backface-visibility: hidden;
+}
+
+/* 4. Disable CSS smooth scroll to prevent conflict with React JS scroll */
+html {
+  scroll-behavior: smooth;
+}
+
 #center {
   display: flex;
   flex-direction: column;
