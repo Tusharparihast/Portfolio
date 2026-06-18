@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
-import { FiArrowDown } from 'react-icons/fi';
+import { FiArrowDown, FiExternalLink, FiFileText } from 'react-icons/fi';
 import BlobCanvas from './BlobCanvas'; // Import your new 3D engine component
 
 export default function Hero() {
@@ -24,7 +24,7 @@ export default function Hero() {
         <BlobCanvas />
       </div>
 
-      {/* 3. FOREGROUND TYPOGRAPHY CONTENT MATRIX (Placed above the z-index mesh flow) */}
+      {/* 3. FOREGROUND TYPOGRAPHY CONTENT MATRIX */}
       <div className="relative z-10 w-full max-w-7xl mx-auto flex flex-col items-center lg:items-start text-center lg:text-left">
         
         <motion.div
@@ -59,21 +59,37 @@ export default function Hero() {
           Translating raw pixel streams into production-ready quantitative analytics. Focused on computer vision architectures and custom environment optimization.
         </motion.p>
 
+        {/* THREE-BUTTON GRID MATRIX */}
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5, delay: 0.3 }}
-          className="flex flex-col sm:flex-row items-center gap-4"
+          className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto"
         >
+          {/* BUTTON 1: CORE PORTFOLIO ANCHOR */}
           <a
             href="#projects"
-            className="w-full sm:w-auto px-6 py-3 bg-blue-600 hover:bg-blue-500 text-white font-medium rounded-xl text-sm shadow-lg shadow-blue-500/20 text-center transition-all transform hover:-y-0.5"
+            className="w-full sm:w-auto px-6 py-3 bg-blue-600 hover:bg-blue-500 text-white font-medium rounded-xl text-sm shadow-lg shadow-blue-500/20 text-center transition-all transform hover:-translate-y-0.5"
           >
             Explore Projects
           </a>
+          
+          {/* BUTTON 2: STATIC PDF VIEW LINK */}
+          <a
+            href="/resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full sm:w-auto px-6 py-3 bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 font-medium rounded-xl text-sm text-center flex items-center justify-center gap-2 transition-all transform hover:-translate-y-0.5 group"
+          >
+            <FiFileText size={16} className="text-slate-400 group-hover:text-slate-600" />
+            <span>View Resume</span>
+            <FiExternalLink size={14} className="opacity-60 group-hover:opacity-100 transition-opacity" />
+          </a>
+
+          {/* BUTTON 3: SAY HELLO BACK IN POSITION */}
           <a
             href="#contact"
-            className="w-full sm:w-auto px-6 py-3 bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200 font-medium rounded-xl text-sm text-center transition-all"
+            className="w-full sm:w-auto px-6 py-3 bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200 font-medium rounded-xl text-sm text-center transition-all transform hover:-translate-y-0.5"
           >
             Say Hello!
           </a>
