@@ -1,4 +1,6 @@
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
+// Swapped standard Link for HashLink to support anchor section scrolling
+import { HashLink as Link } from 'react-router-hash-link'; 
 import { FiArrowLeft, FiClock, FiCalendar } from 'react-icons/fi';
 import blogArticles from '../data/blogsData.json';
 
@@ -12,9 +14,12 @@ export default function BlogDetails() {
   // Guard Clause 1: If article id doesn't match anything in JSON
   if (!article) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-slate-50">
+      <div className="min-h-screen flex flex-col items-center justify-center bg-slate-50 px-6">
         <h2 className="text-xl font-bold text-slate-800">Insight Record Not Found</h2>
-        <Link to="/" className="mt-4 text-blue-600 hover:underline">Return to Core Hub</Link>
+        {/* Redirect fallback directly down to blogs anchor section layout */}
+        <Link to="/#blog" className="mt-4 text-blue-600 hover:underline font-mono text-sm uppercase">
+          Return to Insights Hub
+        </Link>
       </div>
     );
   }
@@ -22,15 +27,17 @@ export default function BlogDetails() {
   return (
     <div 
       className="min-h-screen bg-slate-50 py-24 px-6 md:px-12 lg:px-24 relative z-10 cursor-pointer"
-      onClick={() => navigate('/')} 
+      // UPDATED: Clicking outside the modal now routes natively straight to the blog anchor
+      onClick={() => navigate('/#blog')} 
     >
       <div 
         className="max-w-3xl mx-auto bg-white border border-slate-200/60 p-8 md:p-12 rounded-3xl shadow-xl shadow-slate-200/40 cursor-default"
         onClick={(e) => e.stopPropagation()} 
       >
         
+        {/* SUCCESSFUL CONFIGURATION: Points directly to the #blog section on the home page dashboard */}
         <Link 
-          to="/" 
+          to="/#blog" 
           className="inline-flex items-center gap-2 text-sm font-mono text-slate-500 hover:text-blue-600 transition-colors mb-8 uppercase"
         >
           <FiArrowLeft /> Back to Dashboard

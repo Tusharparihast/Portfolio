@@ -1,4 +1,6 @@
-import { useParams, Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+// Swapped standard Link for HashLink to support anchor section scrolling
+import { HashLink as Link } from 'react-router-hash-link'; 
 import { FiArrowLeft, FiGithub, FiCpu } from 'react-icons/fi';
 import projects from '../data/projectData.json';
 
@@ -8,9 +10,12 @@ export default function ProjectDetails() {
 
   if (!project) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-slate-50">
+      <div className="min-h-screen flex flex-col items-center justify-center bg-slate-50 px-6">
         <h2 className="text-xl font-bold text-slate-800">Pipeline Registry Not Found</h2>
-        <Link to="/" className="mt-4 text-blue-600 hover:underline">Return to Core Hub</Link>
+        {/* Redirect fallback directly down to projects anchor section layout */}
+        <Link to="/#projects" className="mt-4 text-blue-600 hover:underline font-mono text-sm uppercase">
+          Return to Projects Hub
+        </Link>
       </div>
     );
   }
@@ -19,7 +24,11 @@ export default function ProjectDetails() {
     <div className="min-h-screen bg-slate-50 py-24 px-6 md:px-12 lg:px-24 relative z-10">
       <div className="max-w-4xl mx-auto">
         
-        <Link to="/" className="inline-flex items-center gap-2 text-sm font-mono text-slate-500 hover:text-blue-600 transition-colors mb-8 uppercase">
+        {/* SUCCESSFUL CONFIGURATION: Points directly to the #projects section on the home page dashboard */}
+        <Link 
+          to="/#projects" 
+          className="inline-flex items-center gap-2 text-sm font-mono text-slate-500 hover:text-blue-600 transition-colors mb-8 uppercase"
+        >
           <FiArrowLeft /> Back to Dashboard
         </Link>
 
@@ -34,7 +43,11 @@ export default function ProjectDetails() {
         </div>
 
         <div className="w-full h-64 md:h-96 rounded-2xl overflow-hidden shadow-md mb-8 bg-slate-200">
-          <img src={project.image || "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80"} alt={project.title} className="w-full h-full object-cover" />
+          <img 
+            src={project.image || "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80"} 
+            alt={project.title} 
+            className="w-full h-full object-cover" 
+          />
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -59,7 +72,12 @@ export default function ProjectDetails() {
               </div>
             </div>
             
-            <a href={project.github} target="_blank" rel="noreferrer" className="w-full py-3 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-mono tracking-wider font-bold flex items-center justify-center gap-2 transition-colors">
+            <a 
+              href={project.github} 
+              target="_blank" 
+              rel="noreferrer" 
+              className="w-full py-3 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-mono tracking-wider font-bold flex items-center justify-center gap-2 transition-colors"
+            >
               <FiGithub size={14} /> EXTRACT SOURCE CODE
             </a>
           </div>
