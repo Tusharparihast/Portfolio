@@ -28,7 +28,13 @@ export default function Projects() {
           <motion.div
             key={project.id}
             layoutId={`card-container-${project.id}`}
-            onClick={() => setSelectedId(project.id)}
+            
+            // SUCCESSFUL CONFIGURATION: Injecting hash tracking state right when a card expands
+            onClick={() => {
+              setSelectedId(project.id);
+              window.history.replaceState(null, '', '/#projects');
+            }}
+            
             className="bg-white/80 backdrop-blur-md rounded-2xl p-6 border border-slate-200/60 shadow-md cursor-pointer flex flex-col justify-between group h-72 relative overflow-hidden"
             whileHover={{ 
               y: -8, 

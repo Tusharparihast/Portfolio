@@ -1,7 +1,7 @@
 import { FiBookOpen, FiAward, FiUsers, FiActivity } from 'react-icons/fi';
 
 export default function TimelineAndCards() {
-  const educationAndRoles = [
+  const education = [
     {
       title: "Undergraduate AI Student & Researcher",
       organization: "Kathmandu University",
@@ -51,7 +51,7 @@ export default function TimelineAndCards() {
           </h3>
           
           <div className="relative border-l-2 border-slate-100 pl-6 space-y-10">
-            {educationAndRoles.map((item, idx) => (
+            {education.map((item, idx) => (
               <div key={idx} className="relative">
                 {/* Timeline Bullet Anchor */}
                 <span className="absolute -left-[35px] top-1 bg-blue-50 border-2 border-blue-600 p-1.5 rounded-full z-10">

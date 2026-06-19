@@ -36,7 +36,12 @@ export default function BlogMarquee() {
               y: -6,
               boxShadow: "0 20px 25px -5px rgb(0 0 0 / 0.05), 0 8px 10px -6px rgb(0 0 0 / 0.05)"
             }}
-            onClick={() => navigate(`/blog/${blog.id}`)} // 3. Redirects to your new deep-dive view path
+            
+            // SUCCESSFUL CONFIGURATION: Cache historical entry hash anchor right before path swap transitions
+            onClick={() => {
+              window.history.replaceState(null, '', '/#blog');
+              navigate(`/blog/${blog.id}`);
+            }}
           >
             <div>
               {/* Card Header Image Asset with Ambient Light Tint */}
