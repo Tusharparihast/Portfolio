@@ -22,7 +22,10 @@ function MainDashboard() {
 
 function AppContent() {
   const [loading, setLoading] = useState(true);
-  const { hash } = useLocation();
+  const { hash, pathname } = useLocation();
+
+  // Keep track of the previous pathname to detect deep-page back actions
+  const [prevPath, setPrevPath] = useState(pathname);
 
   useEffect(() => {
     if ('scrollRestoration' in window.history) {
@@ -32,28 +35,41 @@ function AppContent() {
     if (window.location.hash) {
       const targetId = window.location.hash.replace('#', '');
 
-      const checkAndSnap = () => {
+      // Detect if we came from a completely different deep-dive route (/blog/:id or /projects/:id)
+      const isComingBackFromDetails = prevPath !== '/' && pathname === '/';
+
+      // Check if a global click flag was set by a navbar action
+      const isNavbarClick = sessionStorage.getItem('nav_click') === 'true';
+
+      const checkAndScroll = () => {
         const element = document.getElementById(targetId);
         if (!element) return false;
         
         window.scrollTo({
           top: element.getBoundingClientRect().top + window.scrollY,
-          behavior: 'instant'
+          // SNAP INSTANTLY if backing out from details pages, otherwise smooth scroll on explicit nav clicks
+          behavior: (isComingBackFromDetails && !isNavbarClick) ? 'instant' : 'smooth'
         });
+
+        // Clear the session flag after execution completes
+        sessionStorage.removeItem('nav_click');
         return true;
       };
 
-      // Poll every 30ms only if immediate execution fails, clearing itself when done
-      if (!checkAndSnap()) {
+      if (!checkAndScroll()) {
         const checkInterval = setInterval(() => {
-          if (checkAndSnap()) clearInterval(checkInterval);
+          if (checkAndScroll()) clearInterval(checkInterval);
         }, 30);
         return () => clearInterval(checkInterval);
       }
     } else {
+      // Direct homepage loads or route cleanups reset instantly to the top coordinate
       window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
     }
-  }, [hash]); 
+
+    // Always update tracking position for the next transition frame evaluation
+    setPrevPath(pathname);
+  }, [hash, pathname]); 
 
   return (
     <>
@@ -61,7 +77,8 @@ function AppContent() {
       {loading && <WelcomeScreen onDone={() => setLoading(false)} />}
 
       <main className="relative min-h-screen w-full bg-white text-slate-900 selection:bg-blue-500 selection:text-white">
-        <Navbar />
+        {/* Pass an action handler to your Navbar to flag an explicit menu click event */}
+        <Navbar onLinkClick={() => sessionStorage.setItem('nav_click', 'true')} />
         <div className="relative z-10">
           <Routes>
             <Route path="/" element={<MainDashboard />} />
