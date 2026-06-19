@@ -15,7 +15,11 @@ import TimelineAndCards from './components/TimeLineAndCards';
 function MainDashboard() {
   return (
     <div id="top">
-      <Hero /><About /><TimelineAndCards /><Projects /><BlogMarquee />
+      <Hero />
+      <About />
+      <TimelineAndCards />
+      <Projects />
+      <BlogMarquee />
     </div>
   );
 }
@@ -27,18 +31,31 @@ function AppContent() {
   // Keep track of the previous pathname to detect deep-page back actions
   const [prevPath, setPrevPath] = useState(pathname);
 
+  // INTERCEPTOR 1: Detect hard reloads and instantly wipe out any deep hash paths
   useEffect(() => {
     if ('scrollRestoration' in window.history) {
       window.history.scrollRestoration = 'manual';
     }
+    
+    const isReload = window.performance
+      ?.getEntriesByType('navigation')
+      .map((nav) => nav.type)
+      .includes('reload');
+
+    if (isReload && window.location.hash) {
+      // Strips '/#journey' back down to a clean visual '/' path line item without re-triggering React renders
+      window.history.replaceState(null, '', window.location.pathname);
+    }
+  }, []);
+
+  // INTERCEPTOR 2: Main framework viewport handling pipeline
+  useEffect(() => {
+    // Hold off scroll loops if the welcome animation vector is actively occupying display real estate
+    if (loading) return;
 
     if (window.location.hash) {
       const targetId = window.location.hash.replace('#', '');
-
-      // Detect if we came from a completely different deep-dive route (/blog/:id or /projects/:id)
       const isComingBackFromDetails = prevPath !== '/' && pathname === '/';
-
-      // Check if a global click flag was set by a navbar action
       const isNavbarClick = sessionStorage.getItem('nav_click') === 'true';
 
       const checkAndScroll = () => {
@@ -47,11 +64,9 @@ function AppContent() {
         
         window.scrollTo({
           top: element.getBoundingClientRect().top + window.scrollY,
-          // SNAP INSTANTLY if backing out from details pages, otherwise smooth scroll on explicit nav clicks
           behavior: (isComingBackFromDetails && !isNavbarClick) ? 'instant' : 'smooth'
         });
 
-        // Clear the session flag after execution completes
         sessionStorage.removeItem('nav_click');
         return true;
       };
@@ -63,13 +78,12 @@ function AppContent() {
         return () => clearInterval(checkInterval);
       }
     } else {
-      // Direct homepage loads or route cleanups reset instantly to the top coordinate
+      // Natural fallback coordinates to guarantee Hero view initialization
       window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
     }
 
-    // Always update tracking position for the next transition frame evaluation
     setPrevPath(pathname);
-  }, [hash, pathname]); 
+  }, [hash, pathname, loading]);
 
   return (
     <>
@@ -77,7 +91,6 @@ function AppContent() {
       {loading && <WelcomeScreen onDone={() => setLoading(false)} />}
 
       <main className="relative min-h-screen w-full bg-white text-slate-900 selection:bg-blue-500 selection:text-white">
-        {/* Pass an action handler to your Navbar to flag an explicit menu click event */}
         <Navbar onLinkClick={() => sessionStorage.setItem('nav_click', 'true')} />
         <div className="relative z-10">
           <Routes>
