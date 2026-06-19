@@ -40,27 +40,29 @@ export default function Projects() {
             transition={{ type: "spring", stiffness: 300, damping: 25 }}
           >
             <div>
-              {/* AUTOMATICALLY ALIGNED HEADER WITH EXPANDED IMAGE SIZE */}
+              {/* AUTOMATICALLY ALIGNED HEADER WITH HIGH-FIDELITY ASPECT FIX */}
               <div className="flex items-start gap-5 mb-5">
-                {/* Upped size to w-24 h-24 on mobile and w-28 h-28 on desktop viewports */}
-                <div className="w-24 h-24 md:w-28 md:h-28 rounded-xl bg-slate-100 border border-slate-200/60 overflow-hidden shrink-0 flex items-center justify-center">
+                
+                {/* Clean, scalable framing container with custom letterbox fallback parameters */}
+                <div className="w-24 h-24 md:w-28 md:h-28 rounded-xl bg-slate-50 border border-slate-200/60 overflow-hidden shrink-0 flex items-center justify-center p-1.5 relative">
                   {project.image ? (
                     <img 
                       src={project.image} 
                       alt={project.title}
-                      className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300"
+                      /* object-contain scaling mechanism keeps landscape layout fully visible without edge crop distortions */
+                      className="max-w-full max-h-full object-contain object-center group-hover:scale-102 transition-transform duration-300"
                       onError={(e) => {
                         e.target.style.display = 'none';
                         e.target.nextSibling.style.display = 'flex';
                       }}
                     />
                   ) : null}
-                  <div className="hidden w-full h-full items-center justify-center bg-slate-100 text-slate-400">
+                  <div className="hidden w-full h-full items-center justify-center bg-slate-100 text-slate-400 absolute inset-0">
                     <FiLayers size={24} />
                   </div>
                 </div>
 
-                {/* Right metadata and metrics block */}
+                {/* Right text layout structure */}
                 <div className="space-y-1.5 min-w-0 flex-1 pt-1">
                   <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[11px] font-mono font-semibold">
                     <span className="text-slate-500 uppercase tracking-wider">
