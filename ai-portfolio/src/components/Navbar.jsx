@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { NavHashLink as Link } from 'react-router-hash-link';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -6,55 +6,78 @@ import { FiMenu, FiX } from 'react-icons/fi';
 
 export default function Navbar({ onLinkClick }) {
   const [isOpen, setIsOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState('top');
   const location = useLocation();
   const navigate = useNavigate();
 
-  // Helper to trigger the session flag safely
+  const navLinks = [
+    { title: 'About', path: '/#about', id: 'about' },
+    { title: 'My Journey', path: '/#journey', id: 'journey' },
+    { title: 'Projects', path: '/#projects', id: 'projects' },
+    { title: 'Insights', path: '/#blog', id: 'blog' },
+    { title: 'Contact', path: '/#contact', id: 'contact' },
+  ];
+
+  // INTERSECTION OBSERVER LOGIC: Tracks viewport position dynamically
+  useEffect(() => {
+    // Only run intersection monitoring if we are on the primary home dashboard page
+    if (location.pathname !== '/') return;
+
+    const observerOptions = {
+      root: null,
+      rootMargin: '-40% 0px -50% 0px', // Triggers right when a section occupies the center area of screen
+      threshold: 0,
+    };
+
+    const observerCallback = (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setActiveSection(entry.target.id);
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+    // Target all your dashboard section IDs
+    const targets = ['top', 'about', 'journey', 'projects', 'blog', 'contact'];
+    targets.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+
+    return () => observer.disconnect();
+  }, [location.pathname]);
+
   const triggerNavFlag = () => {
     if (onLinkClick) onLinkClick();
   };
 
-  // Offset standardizer calculation logic block
   const scrollWithOffset = (el) => {
-    triggerNavFlag(); // Ensure active tracking flag is set for local page smooth transitions
+    triggerNavFlag();
     const yCoordinate = el.getBoundingClientRect().top + window.pageYOffset;
     const yOffset = -80; 
     window.scrollTo({ top: yCoordinate + yOffset, behavior: 'smooth' });
   };
 
-  // Dynamic cross-route click handling intercept pipeline
-  const handleNavigationClick = (e, path) => {
-    setIsOpen(false); // Cleanly drop mobile open state flags
-    triggerNavFlag(); // Cache navigation intention to bypass 'instant' layout snap overrides
+  const handleNavigationClick = (e, path, targetId) => {
+    setIsOpen(false); 
+    triggerNavFlag();
+    setActiveSection(targetId); // Set instantly on manual action selection
 
-    // Check if user is currently inside a deep-dive details subpage path stream
     if (location.pathname !== '/') {
-      e.preventDefault(); // Stop standard routing
-      
-      const targetHash = path.split('#')[1]; // Strip identifier name (e.g., 'about')
-      
-      // Force pipeline back to core page first
+      e.preventDefault();
       navigate('/');
-
-      // Wait briefly for DOM elements to safely render and mount onto layout canvas
       setTimeout(() => {
-        const targetElement = document.getElementById(targetHash);
+        const targetElement = document.getElementById(targetId);
         if (targetElement) {
           const yCoordinate = targetElement.getBoundingClientRect().top + window.pageYOffset;
           const yOffset = -80;
           window.scrollTo({ top: yCoordinate + yOffset, behavior: 'smooth' });
         }
-      }, 150); // Small, unnoticeable timeout window that ensures mount success
+      }, 150);
     }
   };
-
-  const navLinks = [
-    { title: 'About', path: '/#about' },
-    { title: 'My Journey', path: '/#journey' },
-    { title: 'Projects', path: '/#projects' },
-    { title: 'Insights', path: '/#blog' },
-    { title: 'Contact', path: '/#contact' },
-  ];
 
   return (
     <>
@@ -63,26 +86,40 @@ export default function Navbar({ onLinkClick }) {
         <Link 
           smooth 
           to="/#top" 
-          onClick={(e) => handleNavigationClick(e, '/#top')}
-          className="text-slate-900 font-mono font-bold tracking-tighter text-lg hover:text-blue-600 transition-colors"
+          onClick={(e) => handleNavigationClick(e, '/#top', 'top')}
+          className={`text-slate-900 font-mono font-bold tracking-tighter text-lg transition-colors ${activeSection === 'top' ? 'text-blue-600' : 'hover:text-blue-600'}`}
         >
           [TP]
         </Link>
 
         {/* Desktop Interface Navigation Matrix */}
         <nav className="hidden md:flex items-center gap-8">
-          {navLinks.map((link, idx) => (
-            <Link
-              key={idx}
-              smooth
-              to={link.path}
-              scroll={scrollWithOffset}
-              onClick={(e) => handleNavigationClick(e, link.path)}
-              className="text-sm font-medium text-slate-600 hover:text-blue-600 font-mono tracking-wide transition-colors"
-            >
-              {link.title}
-            </Link>
-          ))}
+          {navLinks.map((link, idx) => {
+            const isActive = activeSection === link.id;
+            return (
+              <Link
+                key={idx}
+                smooth
+                to={link.path}
+                scroll={scrollWithOffset}
+                onClick={(e) => handleNavigationClick(e, link.path, link.id)}
+                className={`text-sm font-medium font-mono tracking-wide transition-all duration-200 relative py-1 ${
+                  isActive ? 'text-blue-600 font-bold' : 'text-slate-600 hover:text-blue-600'
+                }`}
+              >
+                {link.title}
+                
+                {/* Clean, micro-interactive underline slide anchor pill */}
+                {isActive && (
+                  <motion.div 
+                    layoutId="activeNavIndicator"
+                    className="absolute bottom-0 left-0 right-0 h-[2px] bg-blue-600 rounded-full"
+                    transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                  />
+                )}
+              </Link>
+            );
+          })}
         </nav>
 
         {/* Mobile Hamburger Trigger */}
@@ -109,8 +146,10 @@ export default function Navbar({ onLinkClick }) {
                 smooth
                 to={link.path}
                 scroll={scrollWithOffset}
-                onClick={(e) => handleNavigationClick(e, link.path)}
-                className="text-lg font-semibold text-slate-800 hover:text-blue-600 font-mono border-b border-slate-50 pb-3"
+                onClick={(e) => handleNavigationClick(e, link.path, link.id)}
+                className={`text-lg font-semibold font-mono border-b border-slate-50 pb-3 transition-colors ${
+                  activeSection === link.id ? 'text-blue-600 pl-2 border-blue-100' : 'text-slate-800'
+                }`}
               >
                 {link.title}
               </Link>

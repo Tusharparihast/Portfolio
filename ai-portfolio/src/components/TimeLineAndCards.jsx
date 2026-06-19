@@ -25,93 +25,124 @@ export default function TimelineAndCards() {
 
   const achievements = [
     {
-      type: "Leadership",
-      title: "Core Member / Organizer @ KUAIC",
-      desc: "Led project calls, managed registrations, and coordinated demonstration stalls for the annual AI Conclave, bringing together tech enthusiasts and national AI projects.",
-      tag: "2025 - 2026"
+      type: "Hackathons & Innovation",
+      title: "National Hackathons & Datathons",
+      // Highlighted the explicit text inline via standard JSX markup
+      desc: (
+        <>
+          Built AI-driven solutions including First Runner-Up at Aaviskar 2025 (Dementia Robot) and selected Top 20 at <span className="font-extrabold text-slate-900">eSewa Hackathon - 2026</span>.
+        </>
+      ),
+      tag: "AI • Problem Solving • Rapid Prototyping"
     },
     {
-      type: "Hackathon",
-      title: "National Level AI Hackathon",
-      desc: "Developed a computer vision pipeline within a 48-hour sprint. Implemented real-time image processing models to analyze frame extractions and isolate spatial coordinates.",
-      tag: "Python & OpenCV"
+      type: "Building Nepal's AI Community",
+      title: "Core Contributor, KUAIC",
+      desc: "Contributed to organizing technical events, workshops, and the country's first student-led AI Hackathon to grow the tech ecosystem.",
+      tag: "Community Building • Teamwork"
     },
     {
-      type: "Contribution",
-      title: "University Magazine Article Author",
-      desc: "Authored a formal, statistics-driven piece on the perspective and future deployment of Artificial Intelligence within Nepalese school ecosystems.",
-      tag: "Editorial"
+      type: "Research & Dataset Development",
+      title: "Field Research & Data Collection",
+      desc: "Experienced in real-world dataset creation, including farm visits, manual collection, data annotation, and preprocessing pipelines.",
+      tag: "Research • Dataset Curation • Data Analytics"
     },
     {
-      type: "Volunteering",
-      title: "Tech Conclave Organizing Team",
-      desc: "Volunteered across multi-day events to streamline project demonstrations, manage technical infrastructure, and coordinate guest tracks.",
-      tag: "Leadership"
+      type: "Student Leadership",
+      title: "Class Representative (2022 – Present)",
+      desc: "Serving as the core student-to-faculty liaison for 3+ years managing communications, concerns, and orientation events.",
+      tag: "Leadership • Communication • Coordination"
+    },
+    {
+      type: "Best Volunteer & Operations Lead",
+      title: "AI Crusade 2023 & Operations",
+      desc: "Recognized as Best Volunteer. Served twice as Stall Lead managing sponsor logistics, volunteer deployments, and event execution.",
+      tag: "Leadership • Operations • Event Management"
+    },
+    {
+      type: "Knowledge Sharing & Peer Support",
+      title: "Guiding Future AI Learners",
+      desc: "Supporting classmates and juniors with curated machine learning learning resources, project guidance, and tech roadmaps.",
+      tag: "Mentorship • Continuous Learning"
     }
   ];
 
   return (
-    <section id="journey" className="py-20 px-6 md:px-12 lg:px-24 max-w-7xl mx-auto bg-white">
+    <section id="journey" className="py-20 px-6 md:px-12 lg:px-24 max-w-7xl mx-auto bg-white space-y-24">
       
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
+      {/* 1. TOP TRACK: ACADEMICS & TIMELINE */}
+      <div className="max-w-4xl">
+        <h3 className="text-2xl font-bold text-slate-900 tracking-tight mb-12 flex items-center gap-2">
+          <FiBookOpen className="text-blue-600" /> Education
+        </h3>
         
-        {/* LEFT COLUMN: ACADEMICS & TIMELINE */}
-        <div className="lg:col-span-5">
-          {/* UPDATED HEADER ICON: Swapped FiActivity for FiBookOpen */}
-          <h3 className="text-2xl font-bold text-slate-900 tracking-tight mb-8 flex items-center gap-2">
-            <FiBookOpen className="text-blue-600" /> Education
-          </h3>
-          
-          <div className="relative border-l-2 border-slate-100 pl-6 space-y-10">
-            {education.map((item, idx) => (
-              <div key={idx} className="relative">
-                {/* Timeline Bullet Anchor */}
-                <span className="absolute -left-[31px] top-1.5 w-3 h-3 bg-blue-600 rounded-full ring-4 ring-blue-50 z-10" />
-                
-                <span className="text-xs font-mono font-semibold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">
-                  {item.duration}
-                </span>
-                <h4 className="text-lg font-bold text-slate-900 mt-2">{item.title}</h4>
-                <p className="text-sm font-medium text-slate-500 mb-2">{item.organization}</p>
-                <p className="text-slate-600 text-sm leading-relaxed">{item.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* RIGHT COLUMN: HACKATHONS, ROLES & ACHIEVEMENTS */}
-        <div className="lg:col-span-7">
-          <h3 className="text-2xl font-bold text-slate-900 tracking-tight mb-8 flex items-center gap-2">
-            <FiAward className="text-blue-600" /> Achievements & Experiences
-          </h3>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {achievements.map((item, idx) => (
-              <div 
-                key={idx} 
-                className="p-6 bg-slate-50 rounded-xl border border-slate-100 shadow-sm hover:shadow-md hover:border-slate-200 transition-all flex flex-col justify-between"
+        <div className="relative border-l-2 border-slate-100 pl-6 space-y-10">
+          {education.map((item, idx) => (
+            <div key={idx} className="relative group">
+              
+              {/* BOOK-OPENING SCROLL ANIMATION ANCHOR */}
+              <motion.span 
+                className="absolute -left-[38px] top-1 bg-white border-2 border-blue-600 p-1.5 rounded-full z-10 flex items-center justify-center shadow-sm text-blue-600"
+                initial={{ scale: 0, rotate: -45, opacity: 0 }}
+                whileInView={{ scale: 1, rotate: 0, opacity: 1 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ 
+                  type: "spring", 
+                  stiffness: 140, 
+                  damping: 15, 
+                  delay: idx * 0.15 
+                }}
               >
-                <div>
-                  <span className="text-xs font-mono uppercase tracking-wider text-slate-400 block mb-1">
-                    {item.type}
-                  </span>
-                  <h4 className="text-base font-bold text-slate-900 mb-2 leading-tight">
-                    {item.title}
-                  </h4>
-                  <p className="text-slate-600 text-sm leading-relaxed mb-4">
-                    {item.desc}
-                  </p>
+                <FiBookOpen size={14} className="transform group-hover:scale-110 transition-transform duration-200" />
+              </motion.span>
+              
+              <span className="text-xs font-mono font-semibold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">
+                {item.duration}
+              </span>
+              <h4 className="text-lg font-bold text-slate-900 mt-2 group-hover:text-blue-600 transition-colors duration-200">
+                {item.title}
+              </h4>
+              <p className="text-sm font-medium text-slate-500 mb-2">{item.organization}</p>
+              <p className="text-slate-600 text-sm leading-relaxed">{item.description}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* 2. BOTTOM TRACK: MINIMAL ACHIEVEMENTS & EXPERIENCES */}
+      <div>
+        <h3 className="text-2xl font-bold text-slate-900 tracking-tight mb-10 flex items-center gap-2">
+          <FiAward className="text-blue-600" /> Achievements & Experiences
+        </h3>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {achievements.map((item, idx) => (
+            <div 
+              key={idx} 
+              className="p-6 bg-slate-50/60 rounded-xl border border-slate-100 shadow-2xs hover:shadow-sm hover:border-slate-200/80 hover:bg-white transition-all duration-300 flex flex-col justify-between group"
+            >
+              <div>
+                <span className="text-[10px] font-mono uppercase tracking-wider text-slate-400 font-bold block mb-1">
+                  {item.type}
+                </span>
+                <h4 className="text-base font-bold text-slate-900 mb-2 leading-tight group-hover:text-blue-600 transition-colors duration-200">
+                  {item.title}
+                </h4>
+                <div className="text-slate-500 text-xs md:text-sm leading-relaxed mb-6">
+                  {item.desc}
                 </div>
-                
-                <span className="text-xs font-semibold text-slate-700 bg-white border border-slate-200 w-fit px-2.5 py-1 rounded-md shadow-2xs">
+              </div>
+              
+              <div className="w-fit max-w-full">
+                <span className="block text-[11px] font-semibold font-mono text-slate-700 bg-white border border-slate-200/80 px-2.5 py-1 rounded-md shadow-3xs truncate">
                   {item.tag}
                 </span>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
-
       </div>
+
     </section>
   );
 }
