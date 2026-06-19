@@ -38,7 +38,11 @@ export default function TimelineAndCards() {
     {
       type: "Building Nepal's AI Community",
       title: "Core Contributor, KUAIC",
-      desc: "Contributed to organizing technical events, workshops, and the country's first student-led AI Hackathon to grow the tech ecosystem.",
+      desc: (
+        <>
+          Contributed to organizing technical events, workshops, and the <span className="font-extrabold text-slate-900">country's first student-led AI Hackathon</span> to grow the tech ecosystem.
+        </>
+      ),
       tag: "Community Building • Teamwork"
     },
     {

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom'; 
 import projects from '../data/projectData.json';
-import { FiGithub, FiArrowRight, FiX } from 'react-icons/fi';
+import { FiGithub, FiArrowRight, FiX, FiLayers } from 'react-icons/fi';
 
 export default function Projects() {
   const navigate = useNavigate(); 
@@ -10,59 +10,81 @@ export default function Projects() {
   const activeProject = projects.find(p => p.id === selectedId);
 
   return (
-    <section id="projects" className="relative min-h-screen py-24 px-6 md:px-12 lg:px-24 max-w-7xl mx-auto">
+    <section id="projects" className="relative min-h-screen py-24 px-6 md:px-12 lg:px-24 max-w-7xl mx-auto border-t border-slate-100">
       
       {/* Section Header */}
       <div className="mb-16 text-center lg:text-left">
-        <h2 className="text-3xl md:text-4xl font-black text-slate-900 tracking-tight mb-4">
-          Selected Research & Architectures
+        <span className="text-xs font-mono font-bold uppercase tracking-widest text-blue-600 block mb-2">
+          Selected Works
+        </span>
+        <h2 className="text-3xl md:text-4xl font-black text-slate-900 tracking-tight">
+          Research & Engineering Projects
         </h2>
-        <p className="text-slate-600 max-w-xl">
-          A showcase of computer vision systems and analytical frameworks optimized for production execution.
-        </p>
       </div>
 
       {/* PROJECTS GRID */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {projects.map((project) => (
           <motion.div
             key={project.id}
             layoutId={`card-container-${project.id}`}
-            
-            // SUCCESSFUL CONFIGURATION: Injecting hash tracking state right when a card expands
             onClick={() => {
               setSelectedId(project.id);
               window.history.replaceState(null, '', '/#projects');
             }}
-            
-            className="bg-white/80 backdrop-blur-md rounded-2xl p-6 border border-slate-200/60 shadow-md cursor-pointer flex flex-col justify-between group h-72 relative overflow-hidden"
+            className="bg-slate-50/50 hover:bg-white rounded-2xl p-6 border border-slate-100 hover:border-slate-200/80 cursor-pointer flex flex-col justify-between group min-h-[20rem] relative transition-colors duration-300"
             whileHover={{ 
-              y: -8, 
-              rotateX: 2, 
-              rotateY: -2,
-              boxShadow: "0 20px 25px -5px rgb(0 0 0 / 0.05), 0 8px 10px -6px rgb(0 0 0 / 0.05)"
+              y: -4,
+              boxShadow: "0 10px 15px -3px rgb(0 0 0 / 0.04), 0 4px 6px -4px rgb(0 0 0 / 0.04)"
             }}
-            transition={{ type: "spring", stiffness: 300, damping: 20 }}
+            transition={{ type: "spring", stiffness: 300, damping: 25 }}
           >
             <div>
-              <div className="flex justify-between items-start mb-4">
-                <span className="text-xs font-semibold text-blue-600 uppercase tracking-wider px-2.5 py-1 bg-blue-50 rounded-full">
-                  {project.domain}
-                </span>
-                <span className="text-xs font-mono text-emerald-600 font-semibold bg-emerald-50 px-2 py-1 rounded">
-                  {project.metrics}
-                </span>
+              {/* AUTOMATICALLY ALIGNED HEADER WITH EXPANDED IMAGE SIZE */}
+              <div className="flex items-start gap-5 mb-5">
+                {/* Upped size to w-24 h-24 on mobile and w-28 h-28 on desktop viewports */}
+                <div className="w-24 h-24 md:w-28 md:h-28 rounded-xl bg-slate-100 border border-slate-200/60 overflow-hidden shrink-0 flex items-center justify-center">
+                  {project.image ? (
+                    <img 
+                      src={project.image} 
+                      alt={project.title}
+                      className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300"
+                      onError={(e) => {
+                        e.target.style.display = 'none';
+                        e.target.nextSibling.style.display = 'flex';
+                      }}
+                    />
+                  ) : null}
+                  <div className="hidden w-full h-full items-center justify-center bg-slate-100 text-slate-400">
+                    <FiLayers size={24} />
+                  </div>
+                </div>
+
+                {/* Right metadata and metrics block */}
+                <div className="space-y-1.5 min-w-0 flex-1 pt-1">
+                  <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[11px] font-mono font-semibold">
+                    <span className="text-slate-500 uppercase tracking-wider">
+                      {project.domain}
+                    </span>
+                    <span className="text-slate-300 hidden sm:inline">•</span>
+                    <span className="text-emerald-600 font-medium">
+                      {project.metrics}
+                    </span>
+                  </div>
+
+                  <h3 className="text-base sm:text-lg font-bold text-slate-900 tracking-tight leading-snug group-hover:text-blue-600 transition-colors duration-200">
+                    {project.title}
+                  </h3>
+                </div>
               </div>
-              <h3 className="text-xl font-bold text-slate-900 group-hover:text-blue-600 transition-colors mb-3">
-                {project.title}
-              </h3>
-              <p className="text-sm text-slate-600 line-clamp-3">
+
+              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed line-clamp-3">
                 {project.shortDescription}
               </p>
             </div>
 
-            <div className="flex items-center gap-2 text-xs font-semibold text-slate-500 group-hover:text-blue-600 transition-colors pt-4">
-              Explore Overview <FiArrowRight className="transform group-hover:translate-x-1 transition-transform" />
+            <div className="flex items-center gap-2 text-xs font-mono font-bold text-slate-700 group-hover:text-blue-600 transition-colors pt-4 border-t border-slate-100/80 mt-4">
+              Explore Overview <FiArrowRight className="transform group-hover:translate-x-1 transition-transform duration-200" />
             </div>
           </motion.div>
         ))}
@@ -72,7 +94,6 @@ export default function Projects() {
       <AnimatePresence>
         {selectedId && activeProject && (
           <>
-            {/* Backdrop Area Overlay */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -80,19 +101,18 @@ export default function Projects() {
               className="fixed inset-0 bg-slate-900/20 backdrop-blur-sm z-40"
             />
 
-            {/* Centering Wrapper Container - Catching the outer click here */}
             <div 
               className="fixed inset-0 flex items-center justify-center z-50 p-4 md:p-6 cursor-pointer"
-              onClick={() => setSelectedId(null)} // Clicking anything inside this outer zone triggers close
+              onClick={() => setSelectedId(null)}
             >
               <motion.div
                 layoutId={`card-container-${selectedId}`}
-                onClick={(e) => e.stopPropagation()} // Stop click bubbling so clicking inside the card content works fine
+                onClick={(e) => e.stopPropagation()}
                 className="bg-white w-full max-w-2xl rounded-3xl p-6 md:p-8 shadow-2xl border border-slate-100 flex flex-col justify-between overflow-y-auto max-h-[90vh] cursor-default"
               >
                 <div>
                   <div className="flex justify-between items-center mb-6">
-                    <span className="text-xs font-semibold text-blue-600 uppercase tracking-wider px-3 py-1 bg-blue-50 rounded-full">
+                    <span className="text-xs font-mono font-bold text-slate-500 uppercase tracking-wider">
                       {activeProject.domain}
                     </span>
                     <button 
@@ -109,7 +129,7 @@ export default function Projects() {
 
                   <div className="p-4 bg-slate-50 border border-slate-100 rounded-xl mb-6 flex items-center justify-between">
                     <span className="text-xs font-mono font-bold text-slate-500 uppercase">Core Benchmark</span>
-                    <span className="text-sm font-bold text-emerald-600">{activeProject.metrics}</span>
+                    <span className="text-sm font-bold text-emerald-600 font-mono">{activeProject.metrics}</span>
                   </div>
 
                   <h4 className="text-xs font-mono font-bold text-slate-400 uppercase tracking-widest mb-2">Technical Summary</h4>
@@ -120,20 +140,19 @@ export default function Projects() {
                   <h4 className="text-xs font-mono font-bold text-slate-400 uppercase tracking-widest mb-3">Pipeline Stack</h4>
                   <div className="flex flex-wrap gap-2 mb-8">
                     {activeProject.tech.map((t, idx) => (
-                      <span key={idx} className="px-3 py-1 bg-slate-100 text-slate-700 text-xs font-medium rounded-md border border-slate-200/40">
+                      <span key={idx} className="px-3 py-1 bg-slate-100 text-slate-700 text-xs font-medium rounded-md border border-slate-200/40 font-mono">
                         {t}
                       </span>
                     ))}
                   </div>
                 </div>
 
-                {/* Navigation Router Triggers */}
                 <div className="flex flex-col sm:flex-row items-center gap-3 pt-4 border-t border-slate-100">
                   <a
                     href={activeProject.github}
                     target="_blank"
                     rel="noreferrer"
-                    className="w-full sm:w-auto px-6 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium rounded-xl text-sm flex items-center justify-center gap-2 transition-colors"
+                    className="w-full sm:w-auto px-6 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium rounded-xl text-sm flex items-center justify-center gap-2 transition-colors font-mono font-bold"
                   >
                     <FiGithub size={18} /> Source Code
                   </a>
@@ -142,7 +161,7 @@ export default function Projects() {
                       setSelectedId(null); 
                       navigate(`/projects/${activeProject.id}`); 
                     }}
-                    className="w-full sm:w-auto px-6 py-3 bg-blue-600 hover:bg-blue-500 text-white font-medium rounded-xl text-sm flex items-center justify-center gap-2 shadow-lg shadow-blue-500/10 transition-colors ml-auto"
+                    className="w-full sm:w-auto px-6 py-3 bg-blue-600 hover:bg-blue-500 text-white font-medium rounded-xl text-sm flex items-center justify-center gap-2 shadow-lg shadow-blue-500/10 transition-colors sm:ml-auto font-mono font-bold"
                   >
                     View Deep Dive <FiArrowRight size={16} />
                   </button>
