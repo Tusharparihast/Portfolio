@@ -1,4 +1,4 @@
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 // Swapped standard Link for HashLink to support anchor section scrolling
 import { HashLink as Link } from 'react-router-hash-link'; 
 import { FiArrowLeft, FiClock, FiCalendar } from 'react-icons/fi';
@@ -6,7 +6,6 @@ import blogArticles from '../data/blogsData.json';
 
 export default function BlogDetails() {
   const { id } = useParams();
-  const navigate = useNavigate();
   
   // Find the matching article
   const article = blogArticles.find((b) => b.id === id);
@@ -25,15 +24,11 @@ export default function BlogDetails() {
   }
 
   return (
-    <div 
-      className="min-h-screen bg-slate-50 py-24 px-6 md:px-12 lg:px-24 relative z-10 cursor-pointer"
-      // UPDATED: Clicking outside the modal now routes natively straight to the blog anchor
-      onClick={() => navigate('/#blog')} 
-    >
-      <div 
-        className="max-w-3xl mx-auto bg-white border border-slate-200/60 p-8 md:p-12 rounded-3xl shadow-xl shadow-slate-200/40 cursor-default"
-        onClick={(e) => e.stopPropagation()} 
-      >
+    // CLEANED: Outer wrapper contains no background click behaviors or cursor pointers
+    <div className="min-h-screen bg-slate-50 py-24 px-6 md:px-12 lg:px-24 relative z-10">
+      
+      {/* CLEANED: Removed stopPropagation and default cursor overrides */}
+      <div className="max-w-3xl mx-auto bg-white border border-slate-200/60 p-8 md:p-12 rounded-3xl shadow-xl shadow-slate-200/40">
         
         {/* SUCCESSFUL CONFIGURATION: Points directly to the #blog section on the home page dashboard */}
         <Link 
