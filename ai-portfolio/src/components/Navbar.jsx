@@ -4,13 +4,19 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiMenu, FiX } from 'react-icons/fi';
 
-export default function Navbar() {
+export default function Navbar({ onLinkClick }) {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
 
+  // Helper to trigger the session flag safely
+  const triggerNavFlag = () => {
+    if (onLinkClick) onLinkClick();
+  };
+
   // Offset standardizer calculation logic block
   const scrollWithOffset = (el) => {
+    triggerNavFlag(); // Ensure active tracking flag is set for local page smooth transitions
     const yCoordinate = el.getBoundingClientRect().top + window.pageYOffset;
     const yOffset = -80; 
     window.scrollTo({ top: yCoordinate + yOffset, behavior: 'smooth' });
@@ -19,6 +25,7 @@ export default function Navbar() {
   // Dynamic cross-route click handling intercept pipeline
   const handleNavigationClick = (e, path) => {
     setIsOpen(false); // Cleanly drop mobile open state flags
+    triggerNavFlag(); // Cache navigation intention to bypass 'instant' layout snap overrides
 
     // Check if user is currently inside a deep-dive details subpage path stream
     if (location.pathname !== '/') {
@@ -51,7 +58,7 @@ export default function Navbar() {
 
   return (
     <>
-      <header className="fixed top-0 left-0 w-full z-50 bg-white/70 backdrop-blur-md border-b border-slate-200/40 px-6 md:px-12 lg:px-24 py-4 flex items-center justify-between shadow-sm">
+      <header className="fixed top-0 left-0 w-full z-50 bg-white/40 backdrop-blur-md border-b border-slate-200/40 px-6 md:px-12 lg:px-24 py-4 flex items-center justify-between shadow-sm">
         {/* Core Root Logo Link */}
         <Link 
           smooth 

@@ -1,24 +1,35 @@
-import { FiBookOpen, FiAward, FiUsers, FiActivity } from 'react-icons/fi';
+import { motion } from 'framer-motion';
+import { FiBookOpen, FiAward } from 'react-icons/fi';
 
 export default function TimelineAndCards() {
   const education = [
     {
-      title: "Undergraduate AI Student & Researcher",
+      title: "B.Tech in Artificial Intelligence",
       organization: "Kathmandu University",
-      duration: "2023 - Present",
-      description: "Focusing on advanced mathematics, vector calculus, and machine vision. Actively researching applied AI solutions, including structural detection and deep learning pipelines.",
-      icon: <FiBookOpen className="text-blue-600" size={20} />
+      duration: "2022 - Present",
+      description: "Exploring the intersection of Computer Vision, Machine Learning, and Intelligent Automation through research-driven projects and collaborative leadership."
     },
     {
-      title: "Core Member / Organizer",
-      organization: "KU Artificial Intelligence Club (KUAIC)",
-      duration: "2025 - 2026",
-      description: "Led project calls, managed registrations, and coordinated demonstration stalls for the annual AI Conclave, bringing together tech enthusiasts and national AI projects.",
-      icon: <FiUsers className="text-blue-600" size={20} />
+      title: "Higher Secondary Education (+2 Science)",
+      organization: "United Academy",
+      duration: "2020 - 2022",
+      description: "Advanced coursework in physics, mathematics, and computer science fundamentals."
+    },
+    {
+      title: "Secondary Education Examination (SEE)",
+      organization: "Suryodaya Secondary School",
+      duration: "2021",
+      description: "Completed secondary education foundations with an emphasis on science and mathematical disciplines."
     }
   ];
 
   const achievements = [
+    {
+      type: "Leadership",
+      title: "Core Member / Organizer @ KUAIC",
+      desc: "Led project calls, managed registrations, and coordinated demonstration stalls for the annual AI Conclave, bringing together tech enthusiasts and national AI projects.",
+      tag: "2025 - 2026"
+    },
     {
       type: "Hackathon",
       title: "National Level AI Hackathon",
@@ -44,19 +55,18 @@ export default function TimelineAndCards() {
       
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
         
-        {/* LEFT COLUMN: ACADEMICS & TIMELINE (Takes 5 cols on large screens) */}
+        {/* LEFT COLUMN: ACADEMICS & TIMELINE */}
         <div className="lg:col-span-5">
+          {/* UPDATED HEADER ICON: Swapped FiActivity for FiBookOpen */}
           <h3 className="text-2xl font-bold text-slate-900 tracking-tight mb-8 flex items-center gap-2">
-            <FiActivity className="text-blue-600" /> Education
+            <FiBookOpen className="text-blue-600" /> Education
           </h3>
           
           <div className="relative border-l-2 border-slate-100 pl-6 space-y-10">
             {education.map((item, idx) => (
               <div key={idx} className="relative">
                 {/* Timeline Bullet Anchor */}
-                <span className="absolute -left-[35px] top-1 bg-blue-50 border-2 border-blue-600 p-1.5 rounded-full z-10">
-                  {item.icon}
-                </span>
+                <span className="absolute -left-[31px] top-1.5 w-3 h-3 bg-blue-600 rounded-full ring-4 ring-blue-50 z-10" />
                 
                 <span className="text-xs font-mono font-semibold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">
                   {item.duration}
@@ -69,10 +79,10 @@ export default function TimelineAndCards() {
           </div>
         </div>
 
-        {/* RIGHT COLUMN: HACKATHONS & ACHIEVEMENTS (Takes 7 cols on large screens) */}
+        {/* RIGHT COLUMN: HACKATHONS, ROLES & ACHIEVEMENTS */}
         <div className="lg:col-span-7">
           <h3 className="text-2xl font-bold text-slate-900 tracking-tight mb-8 flex items-center gap-2">
-            <FiAward className="text-blue-600" /> Achievements & Impact
+            <FiAward className="text-blue-600" /> Achievements & Experiences
           </h3>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
