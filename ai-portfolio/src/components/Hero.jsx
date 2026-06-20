@@ -43,9 +43,9 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 0.1 }}
           className="text-4xl md:text-6xl lg:text-7xl font-black text-slate-900 tracking-tight leading-[1.1] mb-6 max-w-4xl"
         >
-          Engineering Intelligent <br />
+          Building Intelligent Systems <br />
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">
-            Spatial Pipelines
+            That Think, Automate & Scale
           </span>
           <span className={`inline-block ml-1 text-blue-600 ${blink ? 'opacity-100' : 'opacity-0'}`}>_</span>
         </motion.h1>
@@ -56,7 +56,7 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="text-lg md:text-xl text-slate-600 font-normal max-w-2xl leading-relaxed mb-10"
         >
-          Translating raw pixel streams into production-ready quantitative analytics. Focused on computer vision architectures and custom environment optimization.
+          Bridging Artificial Intelligence, Automation, and Computer Vision to transform complex datasets into high-impact, real-world engineering solutions.
         </motion.p>
 
         {/* THREE-BUTTON GRID MATRIX */}
