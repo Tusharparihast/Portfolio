@@ -5,13 +5,14 @@ import { Link } from 'react-router-dom';
 
 const TIMELINE_DATA = [
   {
-    date: 'June 18, 2026',
-    title: 'Model Structural Checkpoints',
-    desc: 'Automated extraction logs running bone vector matrices across high-resolution sample environments. Validated coordinate maps against manual anchor keys.',
+    date: 'June, 2026',
+    title: 'eSewa Hackathon',
+    desc: 'A beautiful blend of learning, fun, teamwork, and innovation. Captured moments from a journey full of ideas, challenges, and memories.',
     images: [
-      'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=500&q=80',
-      'https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?auto=format&fit=crop&w=300&q=80',
-      'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=300&q=80'
+      'images/TimeLine/june/01.jpeg',
+      'images/TimeLine/june/02.jpeg',
+      'images/TimeLine/june/esewa.jpeg',
+      'images/TimeLine/june/Group.jpeg'
     ]
   },
   {
@@ -53,8 +54,7 @@ export default function ArchiveTimeline() {
             <FiArrowLeft className="transform group-hover:-translate-x-1 transition-transform" /> 
             BACK TO PORTFOLIO
           </Link>
-          <span className="block font-mono text-xs tracking-widest text-blue-600 uppercase">[ Chrono Log ]</span>
-          <h1 className="text-4xl md:text-5xl font-black text-slate-900 tracking-tight mt-2">Historical Dev Stream</h1>
+          <h1 className="text-4xl md:text-5xl font-black text-slate-900 tracking-tight mt-2">The Journey Beyond Projects</h1>
         </div>
 
         {/* Center Vertical Rule Axis */}

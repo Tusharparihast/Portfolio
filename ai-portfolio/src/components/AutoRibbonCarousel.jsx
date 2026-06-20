@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { FiArrowRight } from 'react-icons/fi';
 
 const SLIDES = [
-  { id: 1, title: 'Data Anomaly Matrices', img: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=600&q=80' },
+  { id: 1, title: 'Model Structural Checkpoints', img: '/images/TimeLine/june/Group.jpeg' },
   { id: 2, title: 'Keypoint Detection Array', img: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80' },
   { id: 3, title: 'Network Topology Map', img: 'https://images.unsplash.com/photo-1639762681485-074b7f938ba0?auto=format&fit=crop&w=600&q=80' },
   { id: 4, title: 'Gradient Descent Logs', img: 'https://images.unsplash.com/photo-1543286386-7a39e65fecb5?auto=format&fit=crop&w=600&q=80' },
@@ -28,7 +28,7 @@ export default function AutoRibbonCarousel() {
       <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24 mb-10 flex justify-between items-end">
         <div>
           <span className="font-mono text-xs tracking-widest text-blue-600 uppercase">[ Live Stream ]</span>
-          <h2 className="text-3xl font-black text-slate-900 mt-1">System Snapshots</h2>
+          <h2 className="text-3xl font-black text-slate-900 mt-1">Snapshots</h2>
         </div>
         
         <Link 
