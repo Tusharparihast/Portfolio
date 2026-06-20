@@ -4,28 +4,29 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiMenu, FiX } from 'react-icons/fi';
 
-export default function Navbar({ onLinkClick }) {
+export default function Navbar({ onLinkClick, onSmoothLinkClick }) {
   const [isOpen, setIsOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('top');
   const location = useLocation();
   const navigate = useNavigate();
 
+  // Added Gallery link configuration to matching state arrays
   const navLinks = [
     { title: 'About', path: '/#about', id: 'about' },
     { title: 'My Journey', path: '/#journey', id: 'journey' },
     { title: 'Projects', path: '/#projects', id: 'projects' },
     { title: 'Insights', path: '/#blog', id: 'blog' },
+    { title: 'Gallery', path: '/#gallery', id: 'gallery' },
     { title: 'Contact', path: '/#contact', id: 'contact' },
   ];
 
   // INTERSECTION OBSERVER LOGIC: Tracks viewport position dynamically
   useEffect(() => {
-    // Only run intersection monitoring if we are on the primary home dashboard page
     if (location.pathname !== '/') return;
 
     const observerOptions = {
       root: null,
-      rootMargin: '-40% 0px -50% 0px', // Triggers right when a section occupies the center area of screen
+      rootMargin: '-40% 0px -50% 0px', 
       threshold: 0,
     };
 
@@ -39,8 +40,8 @@ export default function Navbar({ onLinkClick }) {
 
     const observer = new IntersectionObserver(observerCallback, observerOptions);
 
-    // Target all your dashboard section IDs
-    const targets = ['top', 'about', 'journey', 'projects', 'blog', 'contact'];
+    // Added 'gallery' to the observer target registration array
+    const targets = ['top', 'about', 'journey', 'gallery', 'projects', 'blog', 'contact'];
     targets.forEach((id) => {
       const el = document.getElementById(id);
       if (el) observer.observe(el);
@@ -54,7 +55,13 @@ export default function Navbar({ onLinkClick }) {
   };
 
   const scrollWithOffset = (el) => {
-    triggerNavFlag();
+    // If navigating to gallery on the homepage, let AppContent know it can smooth scroll
+    if (el.id === 'gallery' && onSmoothLinkClick) {
+      onSmoothLinkClick();
+    } else {
+      triggerNavFlag();
+    }
+
     const yCoordinate = el.getBoundingClientRect().top + window.pageYOffset;
     const yOffset = -80; 
     window.scrollTo({ top: yCoordinate + yOffset, behavior: 'smooth' });
@@ -62,20 +69,19 @@ export default function Navbar({ onLinkClick }) {
 
   const handleNavigationClick = (e, path, targetId) => {
     setIsOpen(false); 
-    triggerNavFlag();
-    setActiveSection(targetId); // Set instantly on manual action selection
+    setActiveSection(targetId);
 
     if (location.pathname !== '/') {
       e.preventDefault();
-      navigate('/');
-      setTimeout(() => {
-        const targetElement = document.getElementById(targetId);
-        if (targetElement) {
-          const yCoordinate = targetElement.getBoundingClientRect().top + window.pageYOffset;
-          const yOffset = -80;
-          window.scrollTo({ top: yCoordinate + yOffset, behavior: 'smooth' });
-        }
-      }, 150);
+      triggerNavFlag();
+      // Router state configuration tells App Content exactly which component section layout to snapshot mount
+      navigate('/', { state: { scrollToId: targetId } });
+    } else {
+      if (targetId === 'gallery' && onSmoothLinkClick) {
+        onSmoothLinkClick();
+      } else {
+        triggerNavFlag();
+      }
     }
   };
 

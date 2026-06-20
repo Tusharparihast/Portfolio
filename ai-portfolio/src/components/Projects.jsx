@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom'; 
 import projects from '../data/projectData.json';
@@ -8,6 +8,20 @@ export default function Projects() {
   const navigate = useNavigate(); 
   const [selectedId, setSelectedId] = useState(null);
   const activeProject = projects.find(p => p.id === selectedId);
+
+  // SCROLL LOCK EFFECT: Freezes page scroll when an interactive card modal expands
+  useEffect(() => {
+    if (selectedId) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+
+    // Clean up lifecycle styling allocations to guarantee reset layout frames
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [selectedId]);
 
   return (
     <section id="projects" className="relative min-h-screen py-24 px-6 md:px-12 lg:px-24 max-w-7xl mx-auto border-t border-slate-100">
@@ -96,15 +110,17 @@ export default function Projects() {
       <AnimatePresence>
         {selectedId && activeProject && (
           <>
+            {/* Elevated explicit stacking layer (z-[60]) ensures complete masking isolation above CTA portions */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-slate-900/20 backdrop-blur-sm z-40"
+              className="fixed inset-0 bg-slate-900/20 backdrop-blur-sm z-[60]"
+              onClick={() => setSelectedId(null)}
             />
 
             <div 
-              className="fixed inset-0 flex items-center justify-center z-50 p-4 md:p-6 cursor-pointer"
+              className="fixed inset-0 flex items-center justify-center z-[61] p-4 md:p-6 cursor-pointer"
               onClick={() => setSelectedId(null)}
             >
               <motion.div

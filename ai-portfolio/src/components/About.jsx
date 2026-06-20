@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 
 export default function About() {
   // 1. Setup the words you want to rotate through
-  const words = ["AI Undergraduate", "Learner", "Developer"];
+  const words = ["AI Undergraduate", "Learner", "Developer", "Problem Solver"];
   const [currentWordIdx, setCurrentWordIdx] = useState(0);
   const [displayedText, setDisplayedText] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
@@ -76,28 +76,7 @@ export default function About() {
       {/* EDITORIAL ABOUT ME SECTION WITH SKILL HOVER TOOLTIPS */}
       <div className="w-full max-w-3xl mt-6">
         <p className="text-xl md:text-2xl text-slate-700 font-normal leading-relaxed text-center lg:text-left">
-          I am an AI practitioner passionate about machine vision and spatial intelligence frameworks. 
-          Currently diving deep into architectural modeling, specializing in building production pipelines inside native 
-          <span className="relative inline-block mx-1.5 px-2 py-0.5 bg-blue-50 text-blue-700 rounded font-semibold border border-blue-100 cursor-help group transition-all">
-            Ubuntu
-            <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-48 p-2 bg-slate-900 text-white text-xs rounded shadow-xl opacity-0 scale-95 group-hover:opacity-100 group-hover:scale-100 transition-all pointer-events-none font-normal normal-case leading-normal z-50">
-              Primary development environment configuration for highly optimized computing and GPU interfacing.
-            </span>
-          </span> 
-          ecosystems. Using tools like 
-          <span className="relative inline-block mx-1.5 px-2 py-0.5 bg-indigo-50 text-indigo-700 rounded font-semibold border border-indigo-100 cursor-help group transition-all">
-            Python
-            <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-48 p-2 bg-slate-900 text-white text-xs rounded shadow-xl opacity-0 scale-95 group-hover:opacity-100 group-hover:scale-100 transition-all pointer-events-none font-normal normal-case leading-normal z-50">
-              Core language framework utilized to write models, statistical evaluation modules, and custom endpoints.
-            </span>
-          </span> 
-          and 
-          <span className="relative inline-block mx-1.5 px-2 py-0.5 bg-emerald-50 text-emerald-700 rounded font-semibold border border-emerald-100 cursor-help group transition-all">
-            OpenCV
-            <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-48 p-2 bg-slate-900 text-white text-xs rounded shadow-xl opacity-0 scale-95 group-hover:opacity-100 group-hover:scale-100 transition-all pointer-events-none font-normal normal-case leading-normal z-50">
-              Leveraged extensively to perform anatomical tracking transformations, contour isolating parsing, and frame extractions.
-            </span>
-          </span>, I design systems that translate raw pixels into deployable quantitative analytics.
+          Hi! I am a final-year AI undergraduate at Kathmandu University specializing in computer vision, automation, and real-world problem-solving. Active hackathon competitor and multi-year student leader, I combine software engineering and machine learning to build intelligent systems with practical impact.
         </p>
       </div>
 

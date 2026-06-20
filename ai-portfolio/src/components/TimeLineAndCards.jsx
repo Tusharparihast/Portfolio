@@ -47,14 +47,14 @@ export default function TimelineAndCards() {
     },
     {
       type: "Research & Dataset Development",
-      title: "Field Research & Data Collection",
+      title: "Field Research & Dataset Development",
       desc: "Experienced in real-world dataset creation, including farm visits, manual collection, data annotation, and preprocessing pipelines.",
       tag: "Research • Dataset Curation • Data Analytics"
     },
     {
       type: "Student Leadership",
       title: "Class Representative (2022 – Present)",
-      desc: "Serving as the core student-to-faculty liaison for 3+ years managing communications, concerns, and orientation events.",
+      desc: "Serving as the core student-to-faculty bridge for 3+ years managing communications, concerns, and orientation events.",
       tag: "Leadership • Communication • Coordination"
     },
     {
@@ -65,7 +65,7 @@ export default function TimelineAndCards() {
     },
     {
       type: "Knowledge Sharing & Peer Support",
-      title: "Guiding Future AI Learners",
+      title: "Guiding Future Tech Learners",
       desc: "Supporting classmates and juniors with curated machine learning learning resources, project guidance, and tech roadmaps.",
       tag: "Mentorship • Continuous Learning"
     }
