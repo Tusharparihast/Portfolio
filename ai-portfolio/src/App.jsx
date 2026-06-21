@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
@@ -33,7 +33,27 @@ function AppContent() {
   const [loading, setLoading] = useState(true);
   const { hash, pathname, state } = useLocation();
 
-  // INTERCEPTOR 1: Handle hard reloads and prevent any secondary hooks from tracking data
+  // A persistent lock flag to let subsequent effects know a reload happened
+  const isReloadSessionRef = useRef(false);
+
+  // BLOCK 1: WELCOME SCREEN LOCK
+  // Locks background viewport physics while loading
+  useEffect(() => {
+    if (loading) {
+      document.body.style.overflow = 'hidden';
+      document.body.style.height = '100vh';
+    } else {
+      document.body.style.overflow = 'unset';
+      document.body.style.height = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+      document.body.style.height = 'unset';
+    };
+  }, [loading]);
+
+  // BLOCK 2: STRICT REFRESH CONTROLLER 
+  // Runs immediately once on mount. Clears memory and forces top placement on hard reloads.
   useEffect(() => {
     if ('scrollRestoration' in window.history) {
       window.history.scrollRestoration = 'manual';
@@ -45,8 +65,8 @@ function AppContent() {
       .includes('reload');
 
     if (isReload) {
-      // Force clean memory state immediately
-      sessionStorage.clear(); 
+      isReloadSessionRef.current = true; // Mark session as a reload cycle
+      sessionStorage.removeItem('return_to_id');
       
       if (window.location.pathname !== '/') {
         window.location.replace('/'); 
@@ -56,19 +76,37 @@ function AppContent() {
       if (window.location.hash) {
         window.history.replaceState(null, '', window.location.pathname);
       }
+
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
     }
   }, []);
 
-  // INTERCEPTOR 2: Viewport management pipeline
+  // BLOCK 3: BROWSER BACK BUTTON TIMELINE TRACKER
+  // Sets the back checkpoint ONLY when naturally browsing on the sub-timeline view
+  useEffect(() => {
+    const isReload = window.performance?.getEntriesByType('navigation')[0]?.type === 'reload';
+    if (isReload && isReloadSessionRef.current) return;
+
+    if (pathname === '/archive-timeline') {
+      sessionStorage.setItem('return_to_id', 'gallery');
+    }
+  }, [pathname]);
+
+  // BLOCK 4: ROUTE STATE & LINKS CONTROLLER
+  // Manages interactive scroll targets (Navbar items, Custom links, and Back targets)
   useEffect(() => {
     if (loading) return;
 
-    // FIXED: Check if a hard reload occurred in this session window to block tracking loops
+    // If this session initialization was a reload, lock this logic container 
+    // out to ensure the page remains strictly locked at coordinates (0, 0)
     const isReload = window.performance?.getEntriesByType('navigation')[0]?.type === 'reload';
-
-    // ONLY save the return checkpoint if we are naturally browsing and NOT in a reload cycle
-    if (pathname === '/archive-timeline' && !isReload) {
-      sessionStorage.setItem('return_to_id', 'gallery');
+    if (isReload && isReloadSessionRef.current) {
+      if (pathname === '/') {
+        window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+      }
+      // Release reload session switch so subsequent custom link/navbar clicks work normally
+      isReloadSessionRef.current = false; 
+      return;
     }
 
     const storedTargetId = sessionStorage.getItem('return_to_id');
@@ -98,7 +136,6 @@ function AppContent() {
         return () => clearInterval(checkInterval);
       }
     } else {
-      // Snap cleanly to the top Hero layout coordinates if no custom targets exist
       if (pathname === '/' && !state?.scrollToId) {
         window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
       }
