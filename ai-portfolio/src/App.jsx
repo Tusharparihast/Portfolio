@@ -14,6 +14,7 @@ import TimelineAndCards from './components/TimeLineAndCards';
 import AutoRibbonCarousel from './components/AutoRibbonCarousel';
 import ArchiveTimeline from './components/ArchiveTimeline';
 import Skills from './components/Skills';
+
 function MainDashboard() {
   return (
     <div id="top">
@@ -32,10 +33,7 @@ function AppContent() {
   const [loading, setLoading] = useState(true);
   const { hash, pathname, state } = useLocation();
 
-  // Keep track of the previous pathname to detect deep-page back actions
-  const [prevPath, setPrevPath] = useState(pathname);
-
-  // INTERCEPTOR 1: Detect hard reloads and instantly wipe out any deep hash paths
+  // INTERCEPTOR 1: Handle hard reloads and prevent any secondary hooks from tracking data
   useEffect(() => {
     if ('scrollRestoration' in window.history) {
       window.history.scrollRestoration = 'manual';
@@ -46,21 +44,33 @@ function AppContent() {
       .map((nav) => nav.type)
       .includes('reload');
 
-    if (isReload && window.location.hash) {
-      window.history.replaceState(null, '', window.location.pathname);
+    if (isReload) {
+      // Force clean memory state immediately
+      sessionStorage.clear(); 
+      
+      if (window.location.pathname !== '/') {
+        window.location.replace('/'); 
+        return;
+      }
+      
+      if (window.location.hash) {
+        window.history.replaceState(null, '', window.location.pathname);
+      }
     }
   }, []);
 
-  // INTERCEPTOR 2: Main framework viewport handling pipeline
+  // INTERCEPTOR 2: Viewport management pipeline
   useEffect(() => {
     if (loading) return;
 
-    // Save a persistence layout checkpoint whenever the user is viewing the archive timeline
-    if (pathname === '/archive-timeline') {
+    // FIXED: Check if a hard reload occurred in this session window to block tracking loops
+    const isReload = window.performance?.getEntriesByType('navigation')[0]?.type === 'reload';
+
+    // ONLY save the return checkpoint if we are naturally browsing and NOT in a reload cycle
+    if (pathname === '/archive-timeline' && !isReload) {
       sessionStorage.setItem('return_to_id', 'gallery');
     }
 
-    // Read target element from router state, session checkpoint, or fallback string hash
     const storedTargetId = sessionStorage.getItem('return_to_id');
     const targetId = state?.scrollToId || storedTargetId || (hash ? hash.replace('#', '') : null);
 
@@ -69,38 +79,32 @@ function AppContent() {
         const element = document.getElementById(targetId);
         if (!element) return false;
         
-        // Force instant snap on back-tracking items to prevent visual layout shifts
         window.scrollTo({
           top: element.getBoundingClientRect().top + window.scrollY,
           behavior: 'instant' 
         });
 
-        // Clear state metadata safely so native route pushes run correctly later
         if (state?.scrollToId) {
           window.history.replaceState(null, '');
         }
-        sessionStorage.removeItem('return_to_id'); // Clear the browser back checkpoint
-        sessionStorage.removeItem('nav_click');
+        sessionStorage.removeItem('return_to_id'); 
         return true;
       };
 
       if (!checkAndScroll()) {
         const checkInterval = setInterval(() => {
           if (checkAndScroll()) clearInterval(checkInterval);
-        }, 10); // Sped up frequency to capture DOM rendering frames faster
+        }, 10); 
         return () => clearInterval(checkInterval);
       }
     } else {
-      // Natural fallback coordinates - ONLY trigger top alignment if there isn't a state destination
+      // Snap cleanly to the top Hero layout coordinates if no custom targets exist
       if (pathname === '/' && !state?.scrollToId) {
         window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
       }
     }
-
-    setPrevPath(pathname);
   }, [hash, pathname, loading, state]);
 
-  // Block the global ScrollToTop component from running if we have an active link state or browser back checkpoint targeting the gallery
   const shouldBlockScrollToTop = state?.scrollToId || sessionStorage.getItem('return_to_id');
 
   return (
@@ -109,7 +113,7 @@ function AppContent() {
       {loading && <WelcomeScreen onDone={() => setLoading(false)} />}
 
       <main className="relative min-h-screen w-full bg-white text-slate-900 selection:bg-blue-500 selection:text-white">
-        <Navbar onLinkClick={() => sessionStorage.setItem('nav_click', 'true')} />
+        <Navbar />
         <div className="relative z-10">
           <Routes>
             <Route path="/" element={<MainDashboard />} />

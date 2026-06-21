@@ -64,7 +64,7 @@
 
 /* 4. Disable CSS smooth scroll to prevent conflict with React JS scroll */
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
 }
 
 #center {
