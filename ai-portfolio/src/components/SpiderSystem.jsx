@@ -9,15 +9,15 @@ function Spider({ eyeBlink, legPhase }) {
 
   const legs = [
     // LEFT side
-    { sx: -R * 0.7, sy: -6,  ex: -38, ey: -22, mx: -26, my: -32 },
-    { sx: -R * 0.8, sy: 0,   ex: -42, ey: -6,  mx: -30, my: -16 },
-    { sx: -R * 0.8, sy: 6,   ex: -40, ey: 14,  mx: -28, my: 4   },
-    { sx: -R * 0.6, sy: 12,  ex: -34, ey: 28,  mx: -22, my: 20  },
+    { sx: -R * 0.7, sy: -6,   ex: -38, ey: -22, mx: -26, my: -32 },
+    { sx: -R * 0.8, sy: 0,    ex: -42, ey: -6,  mx: -30, my: -16 },
+    { sx: -R * 0.8, sy: 6,    ex: -40, ey: 14,  mx: -28, my: 4   },
+    { sx: -R * 0.6, sy: 12,   ex: -34, ey: 28,  mx: -22, my: 20  },
     // RIGHT side
-    { sx:  R * 0.7, sy: -6,  ex:  38, ey: -22, mx:  26, my: -32 },
-    { sx:  R * 0.8, sy: 0,   ex:  42, ey: -6,  mx:  30, my: -16 },
-    { sx:  R * 0.8, sy: 6,   ex:  40, ey: 14,  mx:  28, my: 4   },
-    { sx:  R * 0.6, sy: 12,  ex:  34, ey: 28,  mx:  22, my: 20  },
+    { sx:  R * 0.7, sy: -6,   ex:  38, ey: -22, mx:  26, my: -32 },
+    { sx:  R * 0.8, sy: 0,    ex:  42, ey: -6,  mx:  30, my: -16 },
+    { sx:  R * 0.8, sy: 6,    ex:  40, ey: 14,  mx:  28, my: 4   },
+    { sx:  R * 0.6, sy: 12,   ex:  34, ey: 28,  mx:  22, my: 20  },
   ];
 
   const legWave = (i) => {
@@ -149,7 +149,8 @@ export function SpiderWeb({ containerRef, iconRefs }) {
   if (!webData) return null;
 
   return (
-    <svg className="absolute inset-0 w-full h-full pointer-events-none z-20" style={{ overflow: 'visible' }}>
+    /* 🛠️ FIXED: Replaced overflow: visible inline styling with Tailwind's overflow-hidden layout defense */
+    <svg className="absolute inset-0 w-full h-full pointer-events-none z-20 overflow-hidden">
       <defs>
         <filter id="webGlow" x="-20%" y="-20%" width="140%" height="140%">
           <feGaussianBlur stdDeviation="1.2" result="blur" />
