@@ -22,7 +22,7 @@ export default function CatSplash({ onDone }) {
   const [greetIndex, setGreetIndex]     = useState(0);
   const [greetOpacity, setGreetOpacity] = useState(1);
   const [inkPhase, setInkPhase]         = useState("idle");
-  const [prayPhase, setPrayPhase]       = useState("praying"); // ── NEW: pray phase tracking ──
+  const [prayPhase, setPrayPhase]       = useState("praying"); 
   const [done, setDone]                 = useState(false);
 
   const canvasRef = useRef(null);
@@ -166,8 +166,6 @@ export default function CatSplash({ onDone }) {
     });
 
     t(() => setGreetOpacity(0), INK_START_AT - GREET_FADE - 100);
-
-    // Trigger retraction 300ms before ink starts flooding
     t(() => setPrayPhase("retracting"), INK_START_AT - 300);
 
     t(() => setInkPhase("flood"),  INK_START_AT);
@@ -214,17 +212,60 @@ export default function CatSplash({ onDone }) {
           pointer-events: none;
           z-index: 3;
         }
+
+        /* ── STAGE WRAPPER CONTAINER ── */
+        .cs2-container {
+          position: relative;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: min(300px, 68vw);
+          height: min(370px, 84vw);
+          overflow: visible;
+        }
+
+        /* ── 🌟 NEW: IRREGULAR SHIFTING GLOW BACKGROUND ── */
+        .cs2-organic-glow {
+          position: absolute;
+          width: 115%;
+          height: 115%;
+          top: -5%;
+          left: -7.5%;
+          z-index: 1;
+          background: linear-gradient(135deg, rgba(59,130,246,0.38) 0%, rgba(147,51,234,0.32) 50%, rgba(6,182,212,0.25) 100%);
+          filter: blur(44px);
+          border-radius: 30% 70% 70% 30% / 30% 34% 66% 70%;
+          animation: cs2MorphGlow 12s ease-in-out infinite alternate;
+          opacity: ${catFading ? 0 : 1};
+          transition: opacity 350ms ease-in;
+          pointer-events: none;
+        }
+        @keyframes cs2MorphGlow {
+          0% {
+            border-radius: 30% 70% 70% 30% / 30% 34% 66% 70%;
+            transform: scale(0.95) rotate(0deg);
+          }
+          50% {
+            border-radius: 64% 36% 51% 49% / 41% 62% 38% 59%;
+            transform: scale(1.08) rotate(45deg);
+          }
+          100% {
+            border-radius: 40% 60% 34% 66% / 56% 43% 57% 44%;
+            transform: scale(0.98) rotate(90deg);
+          }
+        }
+
         .cs2-stage {
           position: relative;
           z-index: 2;
-          width: min(300px, 68vw);
+          width: 100%;
+          height: 100%;
           overflow: visible;
           filter: drop-shadow(0 14px 44px rgba(0,0,0,0.06));
           opacity: ${catFading ? 0 : 1};
           transition: opacity 350ms ease-in;
         }
         
-        /* ── NEW: WHOLE CAT NAMASTE BOW ── */
         .cs2-cat-bow {
           transform-origin: 110px 240px;
           animation: ${inkPhase === "idle" ? "cs2BowAction 3.2s ease-in-out infinite" : "none"};
@@ -267,7 +308,6 @@ export default function CatSplash({ onDone }) {
           50%       { transform: scaleY(1.022); }
         }
         
-        /* ── ARMS NAMASTE LOOP + TRANSITION MATRIX ── */
         .cs2-pray-arms {
           opacity: ${prayPhase === "praying" ? 1 : 0};
           transform: ${prayPhase === "praying" ? "scale(1) translateY(0px)" : "scale(0.85) translateY(14px)"};
@@ -312,91 +352,95 @@ export default function CatSplash({ onDone }) {
       `}</style>
       <div className="cs2-root">
         <canvas className="cs2-canvas" ref={canvasRef} />
-        <svg ref={catRef} className="cs2-stage" viewBox="0 0 220 270" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <clipPath id="bodyClip2">
-              <ellipse cx="110" cy="198" rx="54" ry="44" />
-            </clipPath>
-          </defs>
-          <ellipse className="cs2-shadow" cx="110" cy="254" rx="50" ry="7" fill="#111622" />
+        
+        {/* Isolated component layout stack wrapper */}
+        <div className="cs2-container">
           
-          {/* Entire Cat Wrapper for the Bowing/Tilt action */}
-          <g className="cs2-cat-bow">
-            <g className="cs2-tail">
-              <path d="M155,218 Q192,208 196,184 Q200,158 180,146 Q168,138 158,145"
-                stroke="#111622" strokeWidth="15" strokeLinecap="round" fill="none" />
-              <circle cx="158" cy="145" r="9" fill="#1a202c" />
-            </g>
+          {/* Shifting organic backdrop glow shape layer */}
+          <div className="cs2-organic-glow" />
+
+          <svg ref={catRef} className="cs2-stage" viewBox="0 0 220 270" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <clipPath id="bodyClip2">
+                <ellipse cx="110" cy="198" rx="54" ry="44" />
+              </clipPath>
+            </defs>
+            <ellipse className="cs2-shadow" cx="110" cy="254" rx="50" ry="7" fill="#111622" />
             
-            {/* 1. Torso Layer */}
-            <g className="cs2-body">
-              <ellipse cx="110" cy="198" rx="54" ry="44" fill="#111622" />
-              <ellipse cx="110" cy="196" rx="30" ry="28" fill="#1a202c" />
-              <g clipPath="url(#bodyClip2)" className="cs2-greet">
-                <text x="110" y="195" fontFamily="'Cormorant Garamond', serif" fontWeight="300"
-                  fontSize="19" fill="#ffffff" textAnchor="middle" dominantBaseline="middle" letterSpacing="0.04">
-                  {GREETINGS[greetIndex].text}
-                </text>
-                <text x="110" y="212" fontFamily="'Inter', sans-serif" fontWeight="300"
-                  fontSize="7" fill="#ffffff" textAnchor="middle" dominantBaseline="middle"
-                  letterSpacing="0.2" opacity="0.55">
-                  {GREETINGS[greetIndex].lang.toUpperCase()}
-                </text>
+            <g className="cs2-cat-bow">
+              <g className="cs2-tail">
+                <path d="M155,218 Q192,208 196,184 Q200,158 180,146 Q168,138 158,145"
+                  stroke="#111622" strokeWidth="15" strokeLinecap="round" fill="none" />
+                <circle cx="158" cy="145" r="9" fill="#1a202c" />
               </g>
-              <ellipse cx="86"  cy="233" rx="16" ry="10" fill="#111622" />
-              <ellipse cx="134" cy="233" rx="16" ry="10" fill="#111622" />
-              <line x1="80"  y1="229" x2="80"  y2="238" stroke="#2d3748" strokeWidth="1.1" strokeLinecap="round" />
-              <line x1="86"  y1="228" x2="86"  y2="239" stroke="#2d3748" strokeWidth="1.1" strokeLinecap="round" />
-              <line x1="92"  y1="229" x2="92"  y2="238" stroke="#2d3748" strokeWidth="1.1" strokeLinecap="round" />
-              <line x1="128" y1="229" x2="128" y2="238" stroke="#2d3748" strokeWidth="1.1" strokeLinecap="round" />
-              <line x1="134" y1="228" x2="134" y2="239" stroke="#2d3748" strokeWidth="1.1" strokeLinecap="round" />
-              <line x1="140" y1="229" x2="140" y2="238" stroke="#2d3748" strokeWidth="1.1" strokeLinecap="round" />
-            </g>
+              
+              <g className="cs2-body">
+                <ellipse cx="110" cy="198" rx="54" ry="44" fill="#111622" />
+                <ellipse cx="110" cy="196" rx="30" ry="28" fill="#1a202c" />
+                <g clipPath="url(#bodyClip2)" className="cs2-greet">
+                  <text x="110" y="195" fontFamily="'Cormorant Garamond', serif" fontWeight="300"
+                    fontSize="19" fill="#ffffff" textAnchor="middle" dominantBaseline="middle" letterSpacing="0.04">
+                    {GREETINGS[greetIndex].text}
+                  </text>
+                  <text x="110" y="212" fontFamily="'Inter', sans-serif" fontWeight="300"
+                    fontSize="7" fill="#ffffff" textAnchor="middle" dominantBaseline="middle"
+                    letterSpacing="0.2" opacity="0.55">
+                    {GREETINGS[greetIndex].lang.toUpperCase()}
+                  </text>
+                </g>
+                <ellipse cx="86"  cy="233" rx="16" ry="10" fill="#111622" />
+                <ellipse cx="134" cy="233" rx="16" ry="10" fill="#111622" />
+                <line x1="80"  y1="229" x2="80"  y2="238" stroke="#2d3748" strokeWidth="1.1" strokeLinecap="round" />
+                <line x1="86"  y1="228" x2="86"  y2="239" stroke="#2d3748" strokeWidth="1.1" strokeLinecap="round" />
+                <line x1="92"  y1="229" x2="92"  y2="238" stroke="#2d3748" strokeWidth="1.1" strokeLinecap="round" />
+                <line x1="128" y1="229" x2="128" y2="238" stroke="#2d3748" strokeWidth="1.1" strokeLinecap="round" />
+                <line x1="134" y1="228" x2="134" y2="239" stroke="#2d3748" strokeWidth="1.1" strokeLinecap="round" />
+                <line x1="140" y1="229" x2="140" y2="238" stroke="#2d3748" strokeWidth="1.1" strokeLinecap="round" />
+              </g>
 
-            {/* 2. FIXED STACK ORDER: Arms sit precisely on top of body but underneath head highlights */}
-            <g className="cs2-pray-arms">
-              <g className="cs2-pray-left">
-                <path d="M62,185 Q98,158 106,152" stroke="#111622" strokeWidth="13" strokeLinecap="round" fill="none" />
-                <circle cx="106" cy="152" r="6.5" fill="#1a202c" />
+              <g className="cs2-pray-arms">
+                <g className="cs2-pray-left">
+                  <path d="M62,185 Q98,158 106,152" stroke="#111622" strokeWidth="13" strokeLinecap="round" fill="none" />
+                  <circle cx="106" cy="152" r="6.5" fill="#1a202c" />
+                </g>
+                <g className="cs2-pray-right">
+                  <path d="M158,185 Q122,158 114,152" stroke="#111622" strokeWidth="13" strokeLinecap="round" fill="none" />
+                  <circle cx="114" cy="152" r="6.5" fill="#1a202c" />
+                </g>
               </g>
-              <g className="cs2-pray-right">
-                <path d="M158,185 Q122,158 114,152" stroke="#111622" strokeWidth="13" strokeLinecap="round" fill="none" />
-                <circle cx="114" cy="152" r="6.5" fill="#1a202c" />
-              </g>
-            </g>
 
-            {/* 3. Head Layer */}
-            <circle cx="110" cy="90" r="74" fill="#111622" />
-            <path d="M52,44 Q38,6 68,22 Q72,26 66,38 Z" fill="#111622" />
-            <path d="M55,40 Q44,12 65,24 Q68,28 64,37 Z" fill="#3a2232" />
-            <g className="cs2-ear-r">
-              <path d="M168,44 Q182,6 152,22 Q148,26 154,38 Z" fill="#111622" />
-              <path d="M165,40 Q176,12 155,24 Q152,28 156,37 Z" fill="#3a2232" />
+              <circle cx="110" cy="90" r="74" fill="#111622" />
+              <path d="M52,44 Q38,6 68,22 Q72,26 66,38 Z" fill="#111622" />
+              <path d="M55,40 Q44,12 65,24 Q68,28 64,37 Z" fill="#3a2232" />
+              <g className="cs2-ear-r">
+                <path d="M168,44 Q182,6 152,22 Q148,26 154,38 Z" fill="#111622" />
+                <path d="M165,40 Q176,12 155,24 Q152,28 156,37 Z" fill="#3a2232" />
+              </g>
+              <ellipse className="cs2-blush" cx="64"  cy="110" rx="18" ry="11" fill="#e53e3e" />
+              <ellipse className="cs2-blush" cx="156" cy="110" rx="18" ry="11" fill="#e53e3e" />
+              <g className="cs2-eyes">
+                <ellipse cx="87"  cy="88" rx="16" ry="18" fill="#f7fafc" />
+                <ellipse cx="87"  cy="90" rx="9"  ry="14" fill="#111622" />
+                <circle  cx="91"  cy="82" r="4.5" fill="white" />
+                <circle  cx="83"  cy="94" r="2"   fill="white" opacity="0.55" />
+                <ellipse cx="133" cy="88" rx="16" ry="18" fill="#f7fafc" />
+                <ellipse cx="133" cy="90" rx="9"  ry="14" fill="#111622" />
+                <circle  cx="137" cy="82" r="4.5" fill="white" />
+                <circle  cx="129" cy="94" r="2"   fill="white" opacity="0.55" />
+              </g>
+              <path d="M107,114 Q110,110 113,114 Q117,118 110,124 Q103,118 107,114 Z" fill="#f687b3" />
+              <path d="M102,124 Q106,130 110,126 Q114,130 118,124"            stroke="#f687b3" strokeWidth="1.6" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+              <line x1="38"  y1="112" x2="92"  y2="117" stroke="#ffffff" strokeWidth="1.1" opacity="0.28" />
+              <line x1="34"  y1="121" x2="92"  y2="121" stroke="#ffffff" strokeWidth="1.1" opacity="0.28" />
+              <line x1="38"  y1="130" x2="92"  y2="125" stroke="#ffffff" strokeWidth="0.9" opacity="0.18" />
+              <line x1="182" y1="112" x2="128" y2="117" stroke="#ffffff" strokeWidth="1.1" opacity="0.28" />
+              <line x1="186" y1="121" x2="128" y2="121" stroke="#ffffff" strokeWidth="1.1" opacity="0.28" />
+              <line x1="182" y1="130" x2="128" y2="125" stroke="#ffffff" strokeWidth="0.9" opacity="0.18" />
+              <path d="M103,20 Q107,11 110,18" stroke="#1a202c" strokeWidth="2.2" fill="none" strokeLinecap="round" />
+              <path d="M110,18 Q113,9  117,18" stroke="#1a202c" strokeWidth="2.2" fill="none" strokeLinecap="round" />
             </g>
-            <ellipse className="cs2-blush" cx="64"  cy="110" rx="18" ry="11" fill="#e53e3e" />
-            <ellipse className="cs2-blush" cx="156" cy="110" rx="18" ry="11" fill="#e53e3e" />
-            <g className="cs2-eyes">
-              <ellipse cx="87"  cy="88" rx="16" ry="18" fill="#f7fafc" />
-              <ellipse cx="87"  cy="90" rx="9"  ry="14" fill="#111622" />
-              <circle  cx="91"  cy="82" r="4.5" fill="white" />
-              <circle  cx="83"  cy="94" r="2"   fill="white" opacity="0.55" />
-              <ellipse cx="133" cy="88" rx="16" ry="18" fill="#f7fafc" />
-              <ellipse cx="133" cy="90" rx="9"  ry="14" fill="#111622" />
-              <circle  cx="137" cy="82" r="4.5" fill="white" />
-              <circle  cx="129" cy="94" r="2"   fill="white" opacity="0.55" />
-            </g>
-            <path d="M107,114 Q110,110 113,114 Q117,118 110,124 Q103,118 107,114 Z" fill="#f687b3" />
-            <path d="M102,124 Q106,130 110,126 Q114,130 118,124"            stroke="#f687b3" strokeWidth="1.6" fill="none" strokeLinecap="round" strokeLinejoin="round" />
-            <line x1="38"  y1="112" x2="92"  y2="117" stroke="#ffffff" strokeWidth="1.1" opacity="0.28" />
-            <line x1="34"  y1="121" x2="92"  y2="121" stroke="#ffffff" strokeWidth="1.1" opacity="0.28" />
-            <line x1="38"  y1="130" x2="92"  y2="125" stroke="#ffffff" strokeWidth="0.9" opacity="0.18" />
-            <line x1="182" y1="112" x2="128" y2="117" stroke="#ffffff" strokeWidth="1.1" opacity="0.28" />
-            <line x1="186" y1="121" x2="128" y2="121" stroke="#ffffff" strokeWidth="1.1" opacity="0.28" />
-            <line x1="182" y1="130" x2="128" y2="125" stroke="#ffffff" strokeWidth="0.9" opacity="0.18" />
-            <path d="M103,20 Q107,11 110,18" stroke="#1a202c" strokeWidth="2.2" fill="none" strokeLinecap="round" />
-            <path d="M110,18 Q113,9  117,18" stroke="#1a202c" strokeWidth="2.2" fill="none" strokeLinecap="round" />
-          </g>
-        </svg>
+          </svg>
+        </div>
       </div>
     </>
   );

@@ -24,7 +24,7 @@ export default function AutoRibbonCarousel() {
   }, []);
 
   return (
-    /* 🛠️ Fortified parent section constraints */
+    /* Fortified parent section constraints */
     <section id="gallery" className="w-full max-w-full py-24 bg-white border-t border-slate-100 overflow-hidden scroll-mt-12 relative">
       <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24 mb-10 flex justify-between items-end">
         <div>
@@ -45,7 +45,7 @@ export default function AutoRibbonCarousel() {
       <Link 
         to="/archive-timeline" 
         state={{ scrollToId: 'gallery' }}
-        /* 🛠️ FIXED: Added w-full, max-w-full, and overflow-hidden to clip the block layer layout chain */
+        /* FIXED: Added w-full, max-w-full, and overflow-hidden to clip the block layer layout chain */
         className="block w-full max-w-full overflow-hidden px-6 md:px-12 lg:px-24 focus:outline-none"
       >
         <div ref={containerRef} className="w-full max-w-full overflow-hidden py-4 relative">

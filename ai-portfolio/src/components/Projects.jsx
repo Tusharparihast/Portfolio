@@ -28,11 +28,8 @@ export default function Projects() {
       
       {/* Section Header */}
       <div className="mb-16 text-center lg:text-left">
-        <span className="text-xs font-mono font-bold uppercase tracking-widest text-blue-600 block mb-2">
-          Selected Works
-        </span>
         <h2 className="text-3xl md:text-4xl font-black text-slate-900 tracking-tight">
-          Research & Engineering Projects
+           Featured Works 
         </h2>
       </div>
 

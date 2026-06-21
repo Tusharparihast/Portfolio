@@ -138,7 +138,7 @@ export default function TimelineAndCards() {
               </div>
               
               <div className="w-fit max-w-full">
-                <span className="block text-[11px] font-semibold font-mono text-slate-700 bg-white border border-slate-200/80 px-2.5 py-1 rounded-md shadow-3xs truncate">
+                <span className="block text-[11px] font-semibold font-mono text-slate-700 bg-slate-100 border border-slate-200/80 px-2.5 py-1 rounded-md shadow-3xs truncate">
                   {item.tag}
                 </span>
               </div>

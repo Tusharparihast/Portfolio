@@ -57,12 +57,15 @@ export default function About() {
 
         {/* Name Heading Block - Force-Centered on all screen sizes */}
         <div className="flex flex-col items-center text-center">
-          <h2 className="text-3xl md:text-5xl font-black text-slate-900 tracking-tight mb-2">
+          <span className="text-2xl md:text-5xl font-medium text-slate-600 mb-1">
+            Hi, I'm
+          </span>
+          <h2 className="text-3xl md:text-7xl font-black text-slate-900 tracking-tight mb-2">
             Tushar Parihast
           </h2>
           
           {/* Animated Sub-heading stream (Forced to center on all viewports) */}
-          <div className="text-slate-500 font-medium tracking-wide min-h-[1.5em] flex items-center justify-center">
+          <div className="text-lg md:text-2xl text-slate-500 font-medium tracking-wide min-h-[1.5em] flex items-center justify-center" lg:justify-start>
             <span className="text-blue-600 font-semibold">
               {displayedText}
             </span>
@@ -76,7 +79,7 @@ export default function About() {
       {/* EDITORIAL ABOUT ME SECTION WITH SKILL HOVER TOOLTIPS */}
       <div className="w-full max-w-3xl mt-6">
         <p className="text-xl md:text-2xl text-slate-700 font-normal leading-relaxed text-center lg:text-left">
-          Hi! I am a final-year AI undergraduate at Kathmandu University specializing in computer vision, automation, and real-world problem-solving. Active hackathon competitor and multi-year student leader, I combine software engineering and machine learning to build intelligent systems with practical impact.
+           A final-year AI undergraduate at Kathmandu University specializing in computer vision, automation, and real-world problem-solving. Active hackathon competitor and multi-year student leader, I combine software engineering and machine learning to build intelligent systems with practical impact.
         </p>
       </div>
 

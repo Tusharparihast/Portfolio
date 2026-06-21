@@ -12,12 +12,13 @@ const TIMELINE_DATA = [
       'images/TimeLine/june/01.jpeg',
       'images/TimeLine/june/02.jpeg',
       'images/TimeLine/june/esewa.jpeg',
-      'images/TimeLine/june/Group.jpeg'
+      'images/TimeLine/june/Group.jpeg',
+      'images/TimeLine/june/me.jpeg'
     ]
   },
   {
-    date: 'June 04, 2026',
-    title: 'Isolation Forest Threshold Adjustment',
+    date: 'January, 2026',
+    title: 'AI Conclave',
     desc: 'Refactoring telemetry parsing on massive transaction streams. Visualized distance distributions and set rigorous standard deviation offsets to drop false flags.',
     images: [
       'https://images.unsplash.com/photo-1639762681485-074b7f938ba0?auto=format&fit=crop&w=500&q=80',

@@ -11,15 +11,9 @@ export default function BlogMarquee() {
       
       {/* Section Header */}
       <div className="mb-16 text-center">
-        <span className="text-xs font-mono tracking-widest text-blue-600 uppercase mb-3 block">
-          // Engineering Journal
-        </span>
         <h2 className="text-3xl md:text-4xl font-black text-slate-900 tracking-tight mb-4">
           Latest Insights & Notebooks
         </h2>
-        <p className="text-slate-600 max-w-xl mx-auto text-sm md:text-base">
-          Deep dives into structural analytics, machine learning telemetry, and optimization pipelines.
-        </p>
       </div>
 
       {/* THREE-COLUMN ADAPTIVE BOARD */}
