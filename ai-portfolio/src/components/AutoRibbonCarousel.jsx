@@ -24,7 +24,8 @@ export default function AutoRibbonCarousel() {
   }, []);
 
   return (
-    <section id="gallery" className="py-24 bg-white border-t border-slate-100 overflow-hidden scroll-mt-12">
+    /* 🛠️ Fortified parent section constraints */
+    <section id="gallery" className="w-full max-w-full py-24 bg-white border-t border-slate-100 overflow-hidden scroll-mt-12 relative">
       <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24 mb-10 flex justify-between items-end">
         <div>
           <span className="font-mono text-xs tracking-widest text-blue-600 uppercase">[ Live Stream ]</span>
@@ -33,7 +34,7 @@ export default function AutoRibbonCarousel() {
         
         <Link 
           to="/archive-timeline" 
-          state={{ scrollToId: 'gallery' }} // 👈 Sets up back tracking context
+          state={{ scrollToId: 'gallery' }}
           className="inline-flex items-center gap-2 text-sm font-mono text-slate-500 hover:text-blue-600 transition-colors group"
         >
           <span>VIEW FULL TIMELINE</span>
@@ -43,10 +44,11 @@ export default function AutoRibbonCarousel() {
 
       <Link 
         to="/archive-timeline" 
-        state={{ scrollToId: 'gallery' }} // 👈 Enforces history stack context here too
-        className="block px-6 md:px-12 lg:px-24 focus:outline-none"
+        state={{ scrollToId: 'gallery' }}
+        /* 🛠️ FIXED: Added w-full, max-w-full, and overflow-hidden to clip the block layer layout chain */
+        className="block w-full max-w-full overflow-hidden px-6 md:px-12 lg:px-24 focus:outline-none"
       >
-        <div ref={containerRef} className="cursor-pointer overflow-hidden py-4">
+        <div ref={containerRef} className="w-full max-w-full overflow-hidden py-4 relative">
           <motion.div
             animate={{ x: -index * CARD_WIDTH }}
             transition={{ type: 'spring', stiffness: 45, damping: 15 }}

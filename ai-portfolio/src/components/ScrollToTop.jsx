@@ -2,11 +2,15 @@ import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
 export default function ScrollToTop() {
-  // Destructure both pathname and hash to track full navigation changes
   const { pathname, hash } = useLocation();
 
   useEffect(() => {
-    // CRITICAL FIX: If the target URL contains an anchor link hash (like #projects),
+    // 🚀 FIX FOR REFRESHES: Tell the browser to stop forcing its cached history scroll position
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
+
+    // If the target URL contains an anchor link hash (like #projects),
     // abort this hook immediately and let HashLink safely take over scrolling down!
     if (hash) return;
 
