@@ -4,13 +4,33 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiMenu, FiX } from 'react-icons/fi';
 
+// BLOCK 1: DECOUPLED SLIDER COMPONENT
+function SmoothIndicator({ isActive, location }) {
+  return (
+    isActive && (
+      <motion.div
+        layoutId={location.pathname === '/' ? "activeNavIndicator" : undefined}
+        className="absolute bottom-0 left-0 right-0 h-[2px] bg-blue-600 rounded-full"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{
+          type: 'spring',
+          stiffness: 380,
+          damping: 30
+        }}
+        style={{ pointerEvents: 'none' }}
+      />
+    )
+  );
+}
+
 export default function Navbar({ onLinkClick, onSmoothLinkClick }) {
   const [isOpen, setIsOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('top');
   const location = useLocation();
   const navigate = useNavigate();
 
-  // Added Gallery link configuration to matching state arrays
   const navLinks = [
     { title: 'About', path: '/#about', id: 'about' },
     { title: 'My Journey', path: '/#journey', id: 'journey' },
@@ -20,7 +40,7 @@ export default function Navbar({ onLinkClick, onSmoothLinkClick }) {
     { title: 'Contact', path: '/#contact', id: 'contact' },
   ];
 
-  // INTERSECTION OBSERVER LOGIC: Tracks viewport position dynamically
+  // 1. DYNAMIC INTERSECTION OBSERVER: Tracks viewport coordinates smoothly on root path
   useEffect(() => {
     if (location.pathname !== '/') return;
 
@@ -32,7 +52,7 @@ export default function Navbar({ onLinkClick, onSmoothLinkClick }) {
 
     const observerCallback = (entries) => {
       entries.forEach((entry) => {
-        if (entry.isIntersecting) {
+        if (entry.isIntersecting && window.location.pathname === '/') {
           setActiveSection(entry.target.id);
         }
       });
@@ -40,7 +60,6 @@ export default function Navbar({ onLinkClick, onSmoothLinkClick }) {
 
     const observer = new IntersectionObserver(observerCallback, observerOptions);
 
-    // Added 'gallery' to the observer target registration array
     const targets = ['top', 'about', 'journey', 'gallery', 'projects', 'blog', 'contact'];
     targets.forEach((id) => {
       const el = document.getElementById(id);
@@ -50,12 +69,28 @@ export default function Navbar({ onLinkClick, onSmoothLinkClick }) {
     return () => observer.disconnect();
   }, [location.pathname]);
 
+  // 2. ROUTE TRACKING PROTECTION: Retains active context during sub-route rendering
+  useEffect(() => {
+    const path = location.pathname;
+    
+    if (path.startsWith('/blog') || path.startsWith('/insights')) {
+      setActiveSection('blog');
+    } else if (path.startsWith('/projects')) {
+      setActiveSection('projects');
+    } else if (path.startsWith('/gallery')) {
+      setActiveSection('gallery');
+    } else if (path === '/') {
+      if (location.state?.scrollToId) {
+        setActiveSection(location.state.scrollToId);
+      }
+    }
+  }, [location.pathname, location.state]);
+
   const triggerNavFlag = () => {
     if (onLinkClick) onLinkClick();
   };
 
   const scrollWithOffset = (el) => {
-    // If navigating to gallery on the homepage, let AppContent know it can smooth scroll
     if (el.id === 'gallery' && onSmoothLinkClick) {
       onSmoothLinkClick();
     } else {
@@ -74,7 +109,6 @@ export default function Navbar({ onLinkClick, onSmoothLinkClick }) {
     if (location.pathname !== '/') {
       e.preventDefault();
       triggerNavFlag();
-      // Router state configuration tells App Content exactly which component section layout to snapshot mount
       navigate('/', { state: { scrollToId: targetId } });
     } else {
       if (targetId === 'gallery' && onSmoothLinkClick) {
@@ -88,7 +122,6 @@ export default function Navbar({ onLinkClick, onSmoothLinkClick }) {
   return (
     <>
       <header className="fixed top-0 left-0 w-full z-50 bg-white/40 backdrop-blur-md border-b border-slate-200/40 px-6 md:px-12 lg:px-24 py-4 flex items-center justify-between shadow-sm">
-        {/* Core Root Logo Link */}
         <Link 
           smooth 
           to="/#top" 
@@ -98,7 +131,7 @@ export default function Navbar({ onLinkClick, onSmoothLinkClick }) {
           [TP]
         </Link>
 
-        {/* Desktop Interface Navigation Matrix */}
+        {/* BLOCK 2: DESKTOP NAVIGATION MATRIX MAP CONTAINER */}
         <nav className="hidden md:flex items-center gap-8">
           {navLinks.map((link, idx) => {
             const isActive = activeSection === link.id;
@@ -109,20 +142,12 @@ export default function Navbar({ onLinkClick, onSmoothLinkClick }) {
                 to={link.path}
                 scroll={scrollWithOffset}
                 onClick={(e) => handleNavigationClick(e, link.path, link.id)}
-                className={`text-sm font-medium font-mono tracking-wide transition-all duration-200 relative py-1 ${
-                  isActive ? 'text-blue-600 font-bold' : 'text-slate-600 hover:text-blue-600'
+                className={`text-sm font-medium font-mono tracking-wide transition-colors duration-200 relative py-1 ${
+                  isActive ? 'text-blue-600' : 'text-slate-600 hover:text-blue-600'
                 }`}
               >
                 {link.title}
-                
-                {/* Clean, micro-interactive underline slide anchor pill */}
-                {isActive && (
-                  <motion.div 
-                    layoutId="activeNavIndicator"
-                    className="absolute bottom-0 left-0 right-0 h-[2px] bg-blue-600 rounded-full"
-                    transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-                  />
-                )}
+                <SmoothIndicator isActive={isActive} location={location} />
               </Link>
             );
           })}

@@ -113,7 +113,7 @@ export default function Hero() {
               <SiPytorch size={24} color="#EE4C2C" />
             </motion.div>
 
-            {/* ⚛️ GENUINE REACT ATOM LOGO */}
+            {/* GENUINE REACT ATOM LOGO */}
             <motion.div
               ref={setIconRef('opencv')}
               initial={{ opacity: 0, scale: 0.8 }}
@@ -157,7 +157,7 @@ export default function Hero() {
           {/* Crawling Spider System */}
           <CrawlingSpider containerRef={containerRef} iconRefs={iconRefs} />
 
-          {/* 🛠️ FIXED: Replaced fixed w-[440px] with responsive scaling variables to prevent layout track leakage */}
+          {/* FIXED: Replaced fixed w-[440px] with responsive scaling variables to prevent layout track leakage */}
           <div className="w-full max-w-[440px] h-[460px] sm:h-[520px] rounded-3xl bg-transparent border border-dashed border-slate-200/40 pointer-events-none select-none z-10" />
         </div>
       </div>
