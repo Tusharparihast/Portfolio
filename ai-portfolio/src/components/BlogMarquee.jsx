@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
-import { useNavigate } from 'react-router-dom'; // 1. Import useNavigate for routing transitions
-import blogs from '../data/blogsData.json'; // 2. Matches your actual json file name exactly
+import { useNavigate } from 'react-router-dom'; // Import useNavigate for routing transitions
+import blogs from '../data/blogsData.json'; // Matches your actual json file name exactly
 import { FiArrowUpRight } from 'react-icons/fi';
 
 export default function BlogMarquee() {
@@ -31,7 +31,7 @@ export default function BlogMarquee() {
               boxShadow: "0 20px 25px -5px rgb(0 0 0 / 0.05), 0 8px 10px -6px rgb(0 0 0 / 0.05)"
             }}
             
-            // SUCCESSFUL CONFIGURATION: Cache historical entry hash anchor right before path swap transitions
+            // Cache historical entry hash anchor right before path swap transitions
             onClick={() => {
               window.history.replaceState(null, '', '/#blog');
               navigate(`/blog/${blog.id}`);
@@ -62,8 +62,11 @@ export default function BlogMarquee() {
                   {blog.title}
                 </h3>
                 
+                {/* FIXED: Changed blog.summary to blog.subtitle to load distinct content descriptions.
+                  The fallback string will only log if a specific node is missing its subtitle entry.
+                */}
                 <p className="text-slate-500 text-xs md:text-sm line-clamp-3 leading-relaxed">
-                  {blog.summary || "Analyzing architecture scaling, system performance profiling, and processing configurations tested on standard data clusters."}
+                  {blog.subtitle || "Exploring technical orchestration pipelines, engineering logs, and empirical performance metrics across applied research nodes."}
                 </p>
               </div>
             </div>

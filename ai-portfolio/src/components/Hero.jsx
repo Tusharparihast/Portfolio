@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { useEffect, useState, useRef } from 'react';
 import { FiArrowDown, FiExternalLink, FiFileText } from 'react-icons/fi';
-import { SiPython, SiPytorch, SiPostgresql, SiGit } from 'react-icons/si';
+import { SiPytorch, SiPostgresql, SiGit } from 'react-icons/si';
 import { SpiderWeb, CrawlingSpider } from './SpiderSystem';
 
 export default function Hero() {
@@ -17,7 +17,8 @@ export default function Hero() {
   const setIconRef = (key) => (el) => { iconRefs.current[key] = el; };
 
   return (
-    <section className="relative min-h-screen w-full max-w-full flex flex-col items-center justify-center px-6 md:px-12 lg:px-24 overflow-hidden bg-white z-10">
+    /* FIXED: Swapped bg-white to bg-transparent so the global bubble canvas shows through */
+    <section className="relative min-h-screen w-full max-w-full flex flex-col items-center justify-center px-6 md:px-12 lg:px-24 overflow-hidden bg-transparent z-10">
       
       {/* Structural Grid Background */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#e2e8f0_1px,transparent_1px),linear-gradient(to_bottom,#e2e8f0_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] opacity-30 pointer-events-none z-0" />
@@ -30,7 +31,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2 px-3 py-1 bg-slate-50 border border-slate-200 text-slate-500 rounded-md font-mono text-xs tracking-widest uppercase mb-6 shadow-sm"
+            className="inline-flex items-center gap-2 px-3 py-1 bg-slate-50/80 backdrop-blur border border-slate-200 text-slate-500 rounded-md font-mono text-xs tracking-widest uppercase mb-6 shadow-sm"
           >
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
             [SYSTEM STATUS: RUNNING]
@@ -42,9 +43,9 @@ export default function Hero() {
             transition={{ duration: 0.8, delay: 0.1 }}
             className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-slate-900 tracking-tight leading-[1.15] mb-6 max-w-3xl"
           >
-            Building Intelligent Systems <br />
+            Teaching Machines to Understand <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">
-              That Think, Automate &amp; Scale
+              the Visual World
             </span>
             <span className={`inline-block ml-1 text-blue-600 ${blink ? 'opacity-100' : 'opacity-0'}`}>_</span>
           </motion.h1>
@@ -55,7 +56,7 @@ export default function Hero() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="text-sm sm:text-base md:text-lg text-slate-600 font-normal max-w-2xl leading-relaxed mb-8"
           >
-            Combining Artificial Intelligence, Computer Vision, and Data Analytics with software engineering to build high-utility systems. Focused on developing robust, end-to-end automation pipelines that turn unstructured data into functional real-world applications.
+            AI Undergraduate student building intelligent systems through Computer Vision, Machine Learning, and Intelligent Automation.
           </motion.p>
 
           <motion.div
@@ -73,7 +74,7 @@ export default function Hero() {
               <FiExternalLink size={14} className="opacity-60 group-hover:opacity-100 transition-opacity" />
             </a>
             <a href="#contact" className="w-full sm:w-auto px-6 py-3 bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200 font-medium rounded-xl text-sm text-center transition-all transform hover:-translate-y-0.5">
-              Say Hello!
+              Let's Connect
             </a>
           </motion.div>
         </div>
@@ -157,7 +158,6 @@ export default function Hero() {
           {/* Crawling Spider System */}
           <CrawlingSpider containerRef={containerRef} iconRefs={iconRefs} />
 
-          {/* FIXED: Replaced fixed w-[440px] with responsive scaling variables to prevent layout track leakage */}
           <div className="w-full max-w-[440px] h-[460px] sm:h-[520px] rounded-3xl bg-transparent border border-dashed border-slate-200/40 pointer-events-none select-none z-10" />
         </div>
       </div>

@@ -2,6 +2,7 @@ import { useParams } from 'react-router-dom';
 // Swapped standard Link for HashLink to support anchor section scrolling
 import { HashLink as Link } from 'react-router-hash-link'; 
 import { FiArrowLeft, FiClock, FiCalendar } from 'react-icons/fi';
+import ReactMarkdown from 'react-markdown'; 
 import blogArticles from '../data/blogsData.json';
 
 export default function BlogDetails() {
@@ -24,13 +25,11 @@ export default function BlogDetails() {
   }
 
   return (
-    // CLEANED: Outer wrapper contains no background click behaviors or cursor pointers
     <div className="min-h-screen bg-slate-50 py-24 px-6 md:px-12 lg:px-24 relative z-10">
       
-      {/* CLEANED: Removed stopPropagation and default cursor overrides */}
       <div className="max-w-3xl mx-auto bg-white border border-slate-200/60 p-8 md:p-12 rounded-3xl shadow-xl shadow-slate-200/40">
         
-        {/* SUCCESSFUL CONFIGURATION: Points directly to the #blog section on the home page dashboard */}
+        {/* Points directly to the #blog section on the home page dashboard */}
         <Link 
           to="/#blog" 
           className="inline-flex items-center gap-2 text-sm font-mono text-slate-500 hover:text-blue-600 transition-colors mb-8 uppercase"
@@ -54,12 +53,29 @@ export default function BlogDetails() {
           </div>
         </div>
 
-        {/* Guard Clause 2: Check if content field exists before running .split() */}
-        <article className="text-slate-700 text-base md:text-lg leading-relaxed font-normal space-y-6">
+        {/* Article Body Content with Markdown Parsing Rules */}
+        <article className="prose prose-slate max-w-none text-slate-700 text-base md:text-lg leading-relaxed font-normal prose-headings:text-slate-900 prose-headings:font-black prose-strong:text-slate-900 prose-li:marker:text-blue-500">
           {article.content ? (
-            article.content.split('\n\n').map((paragraph, idx) => (
-              <p key={idx}>{paragraph}</p>
-            ))
+            <ReactMarkdown
+              components={{
+                // Custom renderer intercepts h3 tags to isolate and style the developer '//' string elegantly
+                h3: ({ node, children, ...props }) => {
+                  const textStr = String(children);
+                  if (textStr.startsWith('//')) {
+                    const cleanHeading = textStr.replace('//', '').trim();
+                    return (
+                      <h3 className="text-xl font-black text-slate-900 tracking-tight mt-8 mb-4 flex items-center gap-2" {...props}>
+                        <span className="text-blue-600 font-mono font-bold text-base select-none">//</span>
+                        {cleanHeading}
+                      </h3>
+                    );
+                  }
+                  return <h3 className="text-xl font-black text-slate-900 tracking-tight mt-8 mb-4" {...props}>{children}</h3>;
+                }
+              }}
+            >
+              {article.content}
+            </ReactMarkdown>
           ) : (
             <p className="text-slate-400 italic">No content specifications logged in this pipeline node yet.</p>
           )}

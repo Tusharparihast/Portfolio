@@ -4,9 +4,9 @@ import { Link } from 'react-router-dom';
 import { FiArrowRight } from 'react-icons/fi';
 
 const SLIDES = [
-  { id: 1, title: 'Model Structural Checkpoints', img: '/images/TimeLine/june/Group.jpeg' },
+  { id: 1, title: 'eSewa Hackathon', img: '/images/TimeLine/june/Group.jpeg' },
   { id: 2, title: 'Keypoint Detection Array', img: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80' },
-  { id: 3, title: 'Network Topology Map', img: 'https://images.unsplash.com/photo-1639762681485-074b7f938ba0?auto=format&fit=crop&w=600&q=80' },
+  { id: 3, title: 'AAVISHKAR-25', img: '/images/TimeLine/aaviskar/group.jpeg' },
   { id: 4, title: 'Gradient Descent Logs', img: 'https://images.unsplash.com/photo-1543286386-7a39e65fecb5?auto=format&fit=crop&w=600&q=80' },
 ];
 

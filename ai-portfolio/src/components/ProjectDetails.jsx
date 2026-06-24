@@ -12,7 +12,6 @@ export default function ProjectDetails() {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-slate-50 px-6">
         <h2 className="text-xl font-bold text-slate-800">Pipeline Registry Not Found</h2>
-        {/* Redirect fallback directly down to projects anchor section layout */}
         <Link to="/#projects" className="mt-4 text-blue-600 hover:underline font-mono text-sm uppercase">
           Return to Projects Hub
         </Link>
@@ -20,11 +19,24 @@ export default function ProjectDetails() {
     );
   }
 
+  // FIXED PATH RESOLUTION UTILITY:
+  let resolvedProjectImage = "";
+  if (project.image) {
+    const trimmedPath = project.image.trim();
+    if (trimmedPath.startsWith('http') || trimmedPath.startsWith('/')) {
+      resolvedProjectImage = trimmedPath;
+    } else {
+      // Force leading slash for public assets inside nested routing levels
+      resolvedProjectImage = `/${trimmedPath}`;
+    }
+  } else {
+    resolvedProjectImage = "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80";
+  }
+
   return (
     <div className="min-h-screen bg-slate-50 py-24 px-6 md:px-12 lg:px-24 relative z-10">
       <div className="max-w-4xl mx-auto">
         
-        {/* SUCCESSFUL CONFIGURATION: Points directly to the #projects section on the home page dashboard */}
         <Link 
           to="/#projects" 
           className="inline-flex items-center gap-2 text-sm font-mono text-slate-500 hover:text-blue-600 transition-colors mb-8 uppercase"
@@ -44,7 +56,7 @@ export default function ProjectDetails() {
 
         <div className="w-full h-64 md:h-96 rounded-2xl overflow-hidden shadow-md mb-8 bg-slate-200">
           <img 
-            src={project.image || "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80"} 
+            src={resolvedProjectImage} 
             alt={project.title} 
             className="w-full h-full object-cover" 
           />

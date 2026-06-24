@@ -26,11 +26,13 @@ const TIMELINE_DATA = [
     ]
   },
   {
-    date: 'May 24, 2026',
-    title: 'Pipeline Multi-Node Deployment',
-    desc: 'Integrated system configuration adjustments. Successfully routed background streams into clustered containers, lowering cross-node payload delays.',
+    date: 'May, 2025',
+    title: 'AAVISHKAR-25',
+    desc: 'First-Runnerup in the AAVISHKAR-25 hackathon, showcasing innovative solutions and teamwork. The journey was filled with challenges, learning, and memorable experiences.',
     images: [
-      'https://images.unsplash.com/photo-1570126038118-2e322d5612f0?auto=format&fit=crop&w=500&q=80'
+      'images/TimeLine/aaviskar/group.jpeg',
+      'images/TimeLine/aaviskar/Bot.jpeg',
+      'images/TimeLine/aaviskar/certificate.jpeg'
     ]
   }
 ];
