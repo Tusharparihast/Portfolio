@@ -166,10 +166,13 @@ export default function Navbar({ onLinkClick, onSmoothLinkClick }) {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
+            initial={{ opacity: 0, y: -15 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="fixed inset-0 top-[65px] bg-white z-40 flex flex-col p-6 gap-6 md:hidden border-t border-slate-100 shadow-xl h-fit"
+            exit={{ opacity: 0, y: -15 }}
+            transition={{ duration: 0.25, ease: 'easeInOut' }}
+            /* FIXED: Swapped solid background with translucent glass panel attributes 
+               to seamlessly blend background animations during multi-axis overlays. */
+            className="fixed inset-0 top-[65px] bg-white/40 backdrop-blur-xl z-40 flex flex-col p-6 gap-6 md:hidden border-b border-slate-200/40 shadow-xl shadow-slate-900/5 h-fit"
           >
             {navLinks.map((link, idx) => (
               <Link
@@ -178,8 +181,8 @@ export default function Navbar({ onLinkClick, onSmoothLinkClick }) {
                 to={link.path}
                 scroll={scrollWithOffset}
                 onClick={(e) => handleNavigationClick(e, link.path, link.id)}
-                className={`text-lg font-semibold font-mono border-b border-slate-50 pb-3 transition-colors ${
-                  activeSection === link.id ? 'text-blue-600 pl-2 border-blue-100' : 'text-slate-800'
+                className={`text-lg font-bold font-mono border-b border-slate-200/30 pb-3 transition-colors ${
+                  activeSection === link.id ? 'text-blue-600 pl-2 border-blue-500/30' : 'text-slate-800 hover:text-blue-600'
                 }`}
               >
                 {link.title}

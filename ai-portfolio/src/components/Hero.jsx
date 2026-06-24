@@ -17,7 +17,7 @@ export default function Hero() {
   const setIconRef = (key) => (el) => { iconRefs.current[key] = el; };
 
   return (
-    /* FIXED: Swapped bg-white to bg-transparent so the global bubble canvas shows through */
+    /* Structural background wrapper matches transparent global profile layers */
     <section className="relative min-h-screen w-full max-w-full flex flex-col items-center justify-center px-6 md:px-12 lg:px-24 overflow-hidden bg-transparent z-10">
       
       {/* Structural Grid Background */}
@@ -79,8 +79,11 @@ export default function Hero() {
           </motion.div>
         </div>
 
-        {/* RIGHT COLUMN: INTERACTIVE VISUAL DISPLAY */}
-        <div ref={containerRef} className="lg:col-span-5 w-full flex justify-center items-center relative min-h-[560px]">
+        {/* RIGHT COLUMN: INTERACTIVE VISUAL DISPLAY 
+          FIXED: Swapped standard container classes with 'hidden lg:flex' 
+          to remove the layout overhead entirely from constrained mobile/tablet viewports.
+        */}
+        <div ref={containerRef} className="hidden lg:flex lg:col-span-5 w-full justify-center items-center relative min-h-[560px]">
           <div className="absolute w-[380px] h-[380px] rounded-full bg-gradient-to-tr from-blue-400/20 via-indigo-300/20 to-purple-400/10 blur-3xl pointer-events-none z-0" />
 
           {/* Web backdrop connected to the layout */}
