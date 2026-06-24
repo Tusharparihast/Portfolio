@@ -14,11 +14,14 @@ import TimelineAndCards from './components/TimeLineAndCards';
 import AutoRibbonCarousel from './components/AutoRibbonCarousel';
 import ArchiveTimeline from './components/ArchiveTimeline';
 import Skills from './components/Skills';
+import BubbleBackground from './components/BubbleBackground';
 
 function MainDashboard() {
   return (
     <div id="top">
       <Hero />
+      <BubbleBackground />
+
       <About />
       <Skills />
       <TimelineAndCards />
@@ -150,6 +153,7 @@ function AppContent() {
       {loading && <WelcomeScreen onDone={() => setLoading(false)} />}
 
       <main className="relative min-h-screen w-full bg-white text-slate-900 selection:bg-blue-500 selection:text-white">
+        <BubbleBackground />
         <Navbar />
         <div className="relative z-10">
           <Routes>
