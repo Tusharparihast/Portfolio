@@ -7,5 +7,8 @@ export default {
   theme: {
     extend: {},
   },
-  plugins: [],
+  /* FIXED: Added typography plugin to instantly support raw markdown blocks */
+  plugins: [
+    require('@tailwindcss/typography'),
+  ],
 }
