@@ -19,10 +19,10 @@ const TIMELINE_DATA = [
   {
     date: 'January, 2026',
     title: 'AI Conclave',
-    desc: 'Refactoring telemetry parsing on massive transaction streams. Visualized distance distributions and set rigorous standard deviation offsets to drop false flags.',
+    desc: 'Served as a Stall Lead at AI Conclave, coordinating demonstrations, engaging visitors, and showcasing AI innovations during the event.',
     images: [
-      'https://images.unsplash.com/photo-1639762681485-074b7f938ba0?auto=format&fit=crop&w=500&q=80',
-      'https://images.unsplash.com/photo-1543286386-7a39e65fecb5?auto=format&fit=crop&w=500&q=80'
+      '/images/TimeLine/ai-conclave/dog.JPG',
+      '/images/TimeLine/ai-conclave/Group.JPG',
     ]
   },
   {

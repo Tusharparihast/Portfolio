@@ -1,22 +1,66 @@
 [
   {
-    "id": "cattle-bcs",
-    "title": "Automated Cattle Body Condition Scoring",
+    "id": "cattle-bcs-cv",
     "domain": "Computer Vision / Deep Learning",
-    "shortDescription": "An end-to-end computer vision pipeline utilizing OpenCV to detect anatomical landmarks on cattle for automated body condition health assessments.",
-    "longDescription": "Developed a custom image parsing workflow to extract contours from cattle pin bones, thurls, and hook bones. Implemented regression heads to convert spatial coordinates into standardized body condition metrics, reducing subjective veterinary evaluation errors.",
-    "tech": ["Python", "OpenCV", "PyTorch", "Ubuntu"],
-    "metrics": "92% Accuracy across diverse breeds",
-    "github": "https://github.com/yourusername/cattle-bcs"
+    "metrics": "Still in the development phase",
+    "title": "Automated Cattle Body Condition Scoring (BCS)",
+    "shortDescription": "An edge-oriented computer vision pipeline that uses OpenCV and deep learning to detect skeletal landmarks for non-invasive livestock health assessment.",
+    "longDescription": "The Automated Cattle Body Condition Scoring (BCS) project explores computer vision and deep learning techniques for estimating livestock condition from visual inputs. The system is designed to process cattle imagery, identify key skeletal and contour-based landmarks, and support non-invasive body condition assessment. The project focuses on image preprocessing, landmark localization, feature extraction, and model optimization for practical deployment in edge-based environments. By combining OpenCV with neural network–based learning, this work aims to contribute to more efficient livestock monitoring, animal health evaluation, and smart agriculture applications.",
+    "features": [
+      "Landmark Localization: Detects key body regions and contour cues relevant to body condition analysis.",
+      "Edge-Oriented Design: Built with deployment efficiency in mind for lightweight vision workflows.",
+      "Livestock Health Utility: Supports automated assessment workflows for animal monitoring and farm analytics."
+    ],
+    "image": "/images/Projects/BCS.jpeg",
+    "tech": ["OpenCV", "PyTorch", "Python"],
+    "github": "private"
   },
   {
-    "id": "fraud-detection",
-    "title": "Credit Card Anomaly Detection Engine",
-    "domain": "Machine Learning / Analytics",
-    "shortDescription": "A comparative analysis implementing Isolation Forests and Local Outlier Factors to isolate highly skewed fraudulent patterns.",
-    "longDescription": "Leveraged highly imbalanced Kaggle financial data arrays. Designed processing workflows to counter data drift and benchmarked multi-tier ensemble unsupervised trees to optimize recall windows for fraud handlers.",
-    "tech": ["Python", "Scikit-Learn", "Pandas", "Matplotlib"],
-    "metrics": "0.94 ROC-AUC score",
-    "github": "https://github.com/yourusername/fraud-anomaly"
+    "id": "doctor-appointment-n8n",
+    "domain": "Workflow Automation / AI Agents",
+    "metrics": "100% Automated Scheduling",
+    "title": "Automated Doctor Appointment System",
+    "shortDescription": "A low-code automation workflow built with n8n to manage appointment requests, slot checks, confirmations, and notifications end to end.",
+    "longDescription": "The Automated Doctor Appointment System is a workflow automation project built using n8n to streamline medical appointment handling without manual intervention. The system is designed to receive user requests, validate availability, route logic through conditional workflows, and send booking confirmations and notifications automatically. It integrates webhook-driven triggers, database connectivity, and automation logic to create a smooth scheduling experience. This project demonstrates how low-code tools and AI-oriented automation pipelines can be applied to healthcare workflows to improve efficiency, reduce repetitive tasks, and enhance user experience.",
+    "features": [
+      "Webhook-Driven Workflow: Accepts appointment requests and triggers automation instantly.",
+      "Smart Slot Handling: Checks availability and routes requests based on scheduling logic.",
+      "Automated Notifications: Sends confirmations and updates without manual follow-up."
+    ],
+    "image": "/images/Projects/Doc.png",
+    "tech": ["n8n", "Webhooks", "Supabase", "Automation"],
+    "github": "https://github.com/Tusharparihast/Automatic-Doctor-Appointment-using-n8n"
+  },
+  {
+    "id": "domestic-animal-classification",
+    "domain": "Computer Vision / Deep Learning",
+    "metrics": "95.4% Validation Accuracy",
+    "title": "Domestic Animal Image Classification System",
+    "shortDescription": "A CNN-based image classification system designed to recognize and categorize domestic animal species from visual data.",
+    "longDescription": "The Domestic Animal Image Classification System is a computer vision project focused on identifying and categorizing domestic animal species from images using deep learning techniques. The system explores convolutional neural networks for extracting visual features, learning class-specific patterns, and improving classification performance across multiple categories. The project includes dataset preparation, preprocessing, training, evaluation, and performance tuning with methods such as augmentation and transfer learning. This work highlights the practical use of AI in livestock-related analytics, educational tools, and automated image recognition systems for real-world visual understanding tasks.",
+    "features": [
+      "Custom Dataset Preparation: Images were collected, cleaned, and organized for multi-class training.",
+      "CNN-Based Classification: Uses deep learning to learn discriminative features from animal images.",
+      "Practical Applications: Can support livestock monitoring, education, and automated recognition systems."
+    ],
+    "image": "/images/Projects/classification.png",
+    "tech": ["PyTorch", "CNNs", "Transfer Learning", "Python"],
+    "github": "private"
+  },
+  {
+    "id": "traffic-sign-detection",
+    "domain": "Computer Vision / Edge AI",
+    "metrics": "30+ FPS Real-Time Inference",
+    "title": "Real-Time Traffic Sign Detection Framework",
+    "shortDescription": "A high-speed object detection framework designed to localize and classify road signs in real time for intelligent driving support.",
+    "longDescription": "The Real-Time Traffic Sign Detection Framework is a computer vision project focused on detecting and classifying traffic signs from image or video streams with real-time performance in mind. The system uses object detection techniques to locate road signs, recognize their categories, and maintain efficient inference rates for practical deployment. The project includes data preparation, detection pipeline design, model evaluation, and performance optimization for edge-aware environments. This framework is relevant to autonomous driving research, driver assistance systems, and intelligent transportation applications where fast and reliable visual understanding is essential.",
+    "features": [
+      "Real-Time Detection: Processes traffic sign inputs efficiently for live inference use cases.",
+      "Object Localization: Identifies and classifies road signs with detection-based vision methods.",
+      "Edge AI Ready: Designed with performance considerations for lightweight deployment scenarios."
+    ],
+    "image": "/images/Projects/traffic.jpeg",
+    "tech": ["OpenCV", "YOLO", "Object Detection", "CUDA"],
+    "github": "private"
   }
 ]

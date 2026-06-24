@@ -1,23 +1,28 @@
 [
   {
     "id": "ai-schools",
-    "title": "The Evolving Lens: AI's Footprint in Modern Education Systems",
+    "title": "AI for School Children: A Boon or a Bane?",
+    "subtitle": "Insights from global trends and everyday learning environments across Nepal.",
     "date": "Dec 2025",
     "readTime": "5 min read",
-    "image": "https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=400&q=80"
+    "image": "images/Blog/Article.jpeg",
+    "tags": ["AI Literacy", "EdTech", "Socio-Technical Systems"],
+    "content": "###  01. Global Landscape: Macro Trends in EdTech\nIn recent years, artificial intelligence (AI) has expanded rapidly across the globe, fundamentally disrupting how societies work, communicate, and learn. While infrastructure adapts dynamically to this shift, a critical socio-technical question remains: *What does AI mean for school children at the primary and lower-secondary levels?* At this developmental stage, students are often unable to distinguish whether an emerging tool serves as a long-term catalyst or a cognitive crutch.\n\n* **United States:** Market data indicates that approximately 86% of students utilize some form of AI tool for academic studies, with 45% interacting with AI-based tutoring or adaptive learning platforms on a weekly cadence. Large Language Models (LLMs) like ChatGPT and automated editing systems like Grammarly are baseline dependencies for daily homework and research tasks.\n* **China:** Positioned as an early pioneer in hyper-personalized EdTech, surveys reflect an 80% student enthusiasm rate for AI learning interfaces. Top-tier urban academic centers leverage automated math, language, and examination preparation platforms to track performance metrics continuously.\n* **Developing Economies:** According to data from the World Bank, low- and middle-income settings often adapt by utilizing \"Small AI\"—lightweight, mobile-friendly frameworks optimized for low-bandwidth environments and constrained hardware profiles. While private urban institutions adopt these tools rapidly, rural classrooms face deep barriers due to hardware scarcity, connectivity gaps, and a lack of structured instructor training.\n\n### 02. The Nepali Context: Friction Between Tradition and Technology\nIn Nepal, a comprehensive national dataset tracking primary and lower-secondary AI interaction does not yet exist. However, direct classroom observations and field discussions reveal clear, emerging behavioral patterns.\n\nThe traditional pedagogical concept of homework remains largely static. Due to large class sizes and immense time constraints, instructors are rarely equipped to thoroughly audit whether every assignment was completed independently or generated synthetically. Compounding this is a unique generational dynamic: children frequently hold a stronger grasp of modern digital interfaces than their parents. In urban and semi-urban centers, students with regular internet access effortlessly leverage LLMs to bypass problem-solving hurdles entirely, leaning into copy-paste execution loops.\n\n###  03. Field Observations: Biratnagar & Saptari\nTo evaluate this dynamic on the ground, I conducted informal field interviews with younger learners across two distinct geographies: the urban hub of **Biratnagar** and the **Kanchanpur region in Saptari**. Though small in scale, these case studies offer an authentic glimpse into the unstructured habits forming among early-age users:\n\n* **Class 5 Cohort (Age ~10-11):** In a sample group of 10 students, 8 admitted to regularly deploying ChatGPT to complete assignments. The overwhelming consensus was that AI was simply a fast, frictionless alternative to asking an adult for help. None possessed baseline awareness of AI literacy or data bias.\n* **Class 8 Cohort (Age ~13-14):** Older students highlighted that their reliance on AI stemmed directly from a deficit in individual support. Because educators are overwhelmed with heavy administrative duties and large rosters, students are frequently instructed to \"look up solutions online\". Lacking structural guardrails, this guidance inadvertently translates into absolute reliance on automated response generators.\n\n###  04. Structural Recommendations: Engineering Better Frameworks\nAI is an unyielding reality; it cannot—and should not—be barred from the educational ecosystem. It can transform raw ideas into interactive science visuals, simulate conversational foreign language partners, and dynamically scaffold complex topics. To ensure it remains a powerful accelerator rather than a cognitive crutch, schools must implement structural updates:\n\n* **Guided Assistants, Not Answer Engines:** Curriculum design must incentivize using AI to generate conceptual frameworks, brainstorm approaches, or audit rough drafts, rather than providing copy-ready answers.\n* **Early-Stage AI Literacy Curriculums:** Basic AI literacy should be treated as a fundamental baseline skill alongside reading and math. Primary students must be taught how neural networks synthesize data, the reality of algorithmic hallucinations, and the core ethics of academic integrity.\n* **Equip the Support Ecosystem:** Teachers and parents require dedicated technical literacy frameworks. When the surrounding adults understand the system's capabilities and limits, they can build better boundaries and encourage deeper, inquisitive questioning.\n\n###  Conclusion: The Road Ahead for Nepal\nArtificial intelligence holds the power to place the sum of human knowledge into a child's hands—acting as an infinitely patient mentor. However, if relied upon blindly, it risks acting as a cognitive blindfold, rewarding superficial speed over true intellectual development.\n\nFor developing nations like Nepal, where AI integration is in its foundational infancy, we have a unique advantage: the opportunity to learn from the systemic oversights of early-adopting hyper-tech economies. By designing human-centered, responsible EdTech frameworks from day one, we can ensure that AI serves as the ultimate boon for the next generation of thinkers."
   },
   {
     "id": "computer-vision-cattle",
-    "title": "Spatial Metrics: Decoding Cattle Contours via Non-Invasive Computer Vision Pipelines",
-    "date": "Jan 2026",
-    "readTime": "8 min read",
-    "image": "https://images.unsplash.com/photo-1570042225831-d98fa7577f1e?auto=format&fit=crop&w=400&q=80"
+    "title": "More Insights Coming Soon",
+    "subtitle": "Currently working on articles covering AI, hackathons, and real-world project experiences.",
+    "date": "----",
+    "readTime": "No read time",
+    "image": "images/Blog/coming.webp"
   },
   {
     "id": "anomaly-trees",
-    "title": "Unsupervised Ensembles: Benchmarking Isolation Trees on Highly Skewed Datasets",
-    "date": "Feb 2026",
-    "readTime": "6 min read",
-    "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=400&q=80"
+    "title": "New Notebooks in Progress",
+    "subtitle": "Exploring topics in machine learning, data science, and applied AI. Stay tuned for future updates.",
+    "date": "----",
+    "readTime": "No read time",
+    "image": "images/Blog/coming.webp"
   }
 ]
