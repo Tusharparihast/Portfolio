@@ -50,9 +50,16 @@ export default function BlogMarquee() {
 
               {/* Text Meta Content Area */}
               <div className="p-6">
-                <div className="flex items-center gap-3 text-[11px] font-mono font-medium text-slate-400 mb-3">
+                {/* UPDATED: Displays dynamic author data extracted directly from the blog detail attributes */}
+                <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[11px] font-mono font-semibold text-slate-400 mb-3">
+                  {blog.author && (
+                    <>
+                      <span className="text-slate-700">By {blog.author}</span>
+                      <span className="text-slate-200 font-sans">•</span>
+                    </>
+                  )}
                   <span>{blog.date}</span>
-                  <span>•</span>
+                  <span className="text-slate-200 font-sans">•</span>
                   <span className="text-blue-600 bg-blue-50/50 px-2 py-0.5 rounded">
                     {blog.readTime}
                   </span>
