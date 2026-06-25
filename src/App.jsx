@@ -33,7 +33,8 @@ function MainDashboard() {
 }
 
 function AppContent() {
-  const [loading, setLoading] = useState(true);
+  // Initialize loading state directly based on screen width to avoid flickering
+  const [loading, setLoading] = useState(() => window.innerWidth >= 768);
   const { hash, pathname, state } = useLocation();
 
   // A persistent lock flag to let subsequent effects know a reload happened
