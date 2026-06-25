@@ -6,7 +6,7 @@ const SLIDES = [
   { id: 1, title: 'eSewa Hackathon', img: '/images/TimeLine/june/Group.jpeg' },
   { id: 2, title: 'AI Conclave', img: '/images/TimeLine/ai-conclave/Group.JPG' },
   { id: 3, title: 'AAVISHKAR-25', img: '/images/TimeLine/aaviskar/group.jpeg' },
-  { id: 4, title: 'Hack for Nepal - 2025', img: '/images/TimeLine/Hack4Nepal/506295341_752608461038465_9195213934046505558_n.jpg' },
+  { id: 4, title: 'Hack for Nepal - 2025', img: '/images/TimeLine/Hack4Nepal/group.jpg' },
 ];
 
 // Duplicate the array once to create the endless wraparound illusion track
