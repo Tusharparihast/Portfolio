@@ -20,7 +20,11 @@ function MainDashboard() {
   return (
     <div id="top">
       <Hero />
-      <BubbleBackground />
+      
+      {/* Hidden on mobile viewports, rendered on desktop/tablet layout scales */}
+      <div className="hidden md:block">
+        <BubbleBackground />
+      </div>
 
       <About />
       <Skills />
@@ -154,7 +158,11 @@ function AppContent() {
       {loading && <WelcomeScreen onDone={() => setLoading(false)} />}
 
       <main className="relative min-h-screen w-full bg-white text-slate-900 selection:bg-blue-500 selection:text-white">
-        <BubbleBackground />
+        {/* Hidden on mobile viewports, rendered on desktop/tablet layout scales */}
+        <div className="hidden md:block">
+          <BubbleBackground />
+        </div>
+        
         <Navbar />
         <div className="relative z-10">
           <Routes>
