@@ -61,15 +61,10 @@ export default function Projects() {
           <motion.div
             key={project.id}
             variants={cardVariants}
-            layoutId={window.innerWidth >= 768 ? `card-container-${project.id}` : undefined}
+            layoutId={`card-container-${project.id}`}
             onClick={() => {
-              // On mobile, bypass the morphing layout sequence entirely and open the route directly
-              if (window.innerWidth < 768) {
-                navigate(`/projects/${project.id}`);
-              } else {
-                setSelectedId(project.id);
-                window.history.replaceState(null, '', '/#projects');
-              }
+              setSelectedId(project.id);
+              window.history.replaceState(null, '', '/#projects');
             }}
             className="bg-gray-100 hover:bg-white rounded-2xl p-6 border border-slate-100 hover:border-blue-500/50 cursor-pointer flex flex-col justify-between group min-h-[20rem] relative transition-colors duration-300"
             whileHover={{ 
@@ -189,6 +184,7 @@ export default function Projects() {
 
                 {/* Footer Action Bar */}
                 <div className="flex flex-col sm:flex-row items-center gap-3 pt-5 border-t border-slate-100 mt-4">
+                  {/* 👈 Source Code anchor button completely removed from here */}
                   <button
                     onClick={() => {
                       setSelectedId(null); 
