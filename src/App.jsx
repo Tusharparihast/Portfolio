@@ -101,7 +101,7 @@ function AppContent() {
   }, [pathname]);
 
   // BLOCK 4: ROUTE STATE & LINKS CONTROLLER
-  // UPDATED: Manages interactive scroll targets safely across mobile navigation histories
+  // Manages interactive scroll targets (Navbar items, Custom links, and Back targets)
   useEffect(() => {
     if (loading) return;
 
@@ -125,13 +125,10 @@ function AppContent() {
         const element = document.getElementById(targetId);
         if (!element) return false;
         
-        // Pushes execution to end of layout paint stack so mobile chips calculate positions correctly
-        setTimeout(() => {
-          window.scrollTo({
-            top: element.getBoundingClientRect().top + window.scrollY,
-            behavior: 'instant' 
-          });
-        }, 0);
+        window.scrollTo({
+          top: element.getBoundingClientRect().top + window.scrollY,
+          behavior: 'instant' 
+        });
 
         if (state?.scrollToId) {
           window.history.replaceState(null, '');
@@ -147,8 +144,7 @@ function AppContent() {
         return () => clearInterval(checkInterval);
       }
     } else {
-      // Adjusted condition: Only snap to top if there are no history state directions or active hashes
-      if (pathname === '/' && !state?.scrollToId && !hash) {
+      if (pathname === '/' && !state?.scrollToId) {
         window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
       }
     }
