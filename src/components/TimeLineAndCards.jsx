@@ -18,7 +18,7 @@ export default function TimelineAndCards() {
     {
       title: "Secondary Education Examination (SEE)",
       organization: "Suryodaya Secondary School",
-      duration: "2021",
+      duration: "2020",
       description: "Completed secondary education foundations with an emphasis on science and mathematical disciplines."
     }
   ];
