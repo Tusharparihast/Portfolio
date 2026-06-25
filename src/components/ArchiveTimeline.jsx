@@ -7,13 +7,15 @@ const TIMELINE_DATA = [
   {
     date: 'June, 2026',
     title: 'eSewa Hackathon',
-    desc: 'A beautiful blend of learning, fun, teamwork, and innovation. Captured moments from a journey full of ideas, challenges, and memories.',
+    desc: 'The best hackathon experience of my life — filled with ideas, friendships, sleepless nights, and memories that will stay with me forever.',
     images: [
       'images/TimeLine/june/01.jpeg',
       'images/TimeLine/june/02.jpeg',
       'images/TimeLine/june/esewa.jpeg',
       'images/TimeLine/june/Group.jpeg',
-      'images/TimeLine/june/me.jpeg'
+      'images/TimeLine/june/me.jpeg',
+      'images/TimeLine/june/board.jpeg',
+      'images/TimeLine/june/rhino.jpeg'
     ]
   },
   {
@@ -21,8 +23,20 @@ const TIMELINE_DATA = [
     title: 'AI Conclave',
     desc: 'Served as a Stall Lead at AI Conclave, coordinating demonstrations, engaging visitors, and showcasing AI innovations during the event.',
     images: [
-      '/images/TimeLine/ai-conclave/dog.JPG',
+      '/images/TimeLine/ai-conclave/dog.jpeg',
       '/images/TimeLine/ai-conclave/Group.JPG',
+    ]
+  },
+  {
+    date: 'June, 2025',
+    title: 'Hack for Nepal - 2025',
+    desc: 'Ideas, teamwork, laughs, and a little bit of chaos — Hack for Nepal 2025 was a memorable journey.',
+    images: [
+      '/images/TimeLine/Hack4Nepal/group.jpg',
+      '/images/TimeLine/Hack4Nepal/me.jpeg',
+      '/images/TimeLine/Hack4Nepal/certificate.jpeg',
+      '/images/TimeLine/Hack4Nepal/3us.jpg'
+
     ]
   },
   {
