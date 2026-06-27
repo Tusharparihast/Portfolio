@@ -194,7 +194,7 @@ export default function CatSplash({ onDone }) {
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Inter:wght@300;400&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Inter:wght@300;400;500;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
 
         .cs-root {
           position: fixed;
@@ -206,6 +206,7 @@ export default function CatSplash({ onDone }) {
             linear-gradient(to bottom, rgba(0,52,110,0.032) 1px, transparent 1px);
           background-size: 64px 64px;
           display: flex;
+          flex-direction: column;
           align-items: center;
           justify-content: center;
           overflow: hidden;
@@ -214,10 +215,10 @@ export default function CatSplash({ onDone }) {
           pointer-events: ${inkPhase === "clear" || inkPhase === "done" ? "none" : "auto"};
         }
 
-        /* ── Main Ambient Background Purple Aura (Upscaled & Adapted) ── */
+        /* ── Main Ambient Background Purple Aura ── */
         .cs-glow-back {
           position: absolute;
-          width: 560px; /* Increased from 440px to match larger size */
+          width: 560px;
           height: 560px;
           top: 50%; left: 50%;
           transform: translate(-50%, -50%);
@@ -237,11 +238,11 @@ export default function CatSplash({ onDone }) {
           50%      { transform: translate(-50%, -50%) scale(1.08); opacity: 0.85; }
         }
 
-        /* ── Tight irregular paw-spot purple glow (Upscaled & Adapted) ── */
+        /* ── Tight irregular paw-spot purple glow ── */
         .cs-glow-paw {
           position: absolute;
-          width: 155px; /* Increased from 120px */
-          height: 125px; /* Increased from 100px */
+          width: 155px;
+          height: 125px;
           top: 50%; left: 50%;
           transform: translate(-50%, -68%);
           background: radial-gradient(ellipse at 50% 60%,
@@ -271,14 +272,112 @@ export default function CatSplash({ onDone }) {
           z-index: 3;
         }
 
-        /* ── Stage Size (Increased for a bigger cat display) ── */
+        /* ── Stage Size ── */
         .cs-stage {
           position: relative;
           z-index: 2;
-          width: min(375px, 82vw); /* Increased from min(300px, 68vw) */
+          width: min(375px, 82vw);
           overflow: visible;
           opacity: ${catFading ? 0 : 1};
           transition: opacity 360ms ease-in;
+        }
+
+        /* ── Centered Modern Branding Stack Container ── */
+        .cs-terminal-layout {
+          margin-top: 28px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
+          z-index: 2;
+          opacity: ${catFading ? 0 : 1};
+          transition: opacity 300ms ease-in;
+          pointer-events: none;
+        }
+
+        /* Left-to-Right Reveal Animation Stack for Title */
+        .cs-title-name {
+          font-family: 'Inter', sans-serif;
+          font-size: 38px;
+          font-weight: 800;
+          text-transform: uppercase;
+          letter-spacing: 0.08em;
+          color: #121824;
+          line-height: 1.1;
+          margin: 0 0 10px 0;
+          white-space: nowrap;
+          
+          /* Masking/Clipping for clean horizontal sliding curtain look */
+          clip-path: polygon(0 0, 0 0, 0 100%, 0% 100%);
+          animation: csRevealLeftRight 2s cubic-bezier(0.25, 1, 0.5, 1) forwards 250ms;
+        }
+
+        /* Status label typography matching reference layout details */
+        .cs-sub-status {
+          font-family: 'JetBrains Mono', monospace;
+          font-size: 11px;
+          font-weight: 500;
+          text-transform: uppercase;
+          letter-spacing: 0.28em;
+          color: #a855f7;
+          margin-bottom: 12px;
+          display: inline-block;
+          overflow: hidden;
+          white-space: nowrap;
+          border-right: 2px solid #9333ea;
+          width: 0;
+          animation: 
+            csTypeReveal 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards 450ms,
+            csCursorBlink 0.8s step-end infinite;
+        }
+
+        /* Loading tracker structure container */
+        .cs-loading-wrapper {
+          width: 240px;
+          height: 2px;
+          background-color: rgba(226, 232, 240, 0.9);
+          border-radius: 4px;
+          overflow: hidden;
+          opacity: 0;
+          animation: csFadeSimple 0.4s ease forwards 400ms;
+        }
+
+        /* Progress line tracked directly to match exactly with INK_START_AT */
+        .cs-loading-bar {
+          height: 100%;
+          width: 0%;
+          background: linear-gradient(90deg, #9333ea, #c084fc);
+          border-radius: 4px;
+          animation: csLoadProgress ${INK_START_AT}ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        /* Left to Right clip path translation sequence */
+        @keyframes csRevealLeftRight {
+          from { clip-path: polygon(0 0, 0 0, 0 100%, 0 100%); }
+          to   { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
+        }
+
+        @keyframes csFadeSimple {
+          to { opacity: 1; }
+        }
+
+        @keyframes csTypeReveal {
+          from { width: 0; }
+          to   { width: 100%; }
+        }
+
+        @keyframes csCursorBlink {
+          from, to { border-color: transparent; }
+          50%      { border-color: #9333ea; }
+        }
+
+        @keyframes csLoadProgress {
+          0%   { width: 0%; }
+          25%  { width: 18%; }
+          60%  { width: 55%; }
+          85%  { width: 92%; }
+          100% { width: 100%; }
         }
 
         /* ── Cat animations ── */
@@ -318,7 +417,6 @@ export default function CatSplash({ onDone }) {
           50%       { transform: scaleY(1.022); }
         }
 
-        /* paw group pulse in sync with breathing */
         .cs-paws-group {
           transform-origin: 110px 160px;
           animation: csPawsPulse 3.2s ease-in-out infinite;
@@ -329,7 +427,6 @@ export default function CatSplash({ onDone }) {
           50%       { transform: scale(1.06) translateY(-2px); }
         }
 
-        /* subtle full-cat bow during greetings */
         .cs-cat-bow {
           transform-origin: 110px 220px;
           animation: ${isGreeting ? "csBow 3.2s ease-in-out infinite" : "none"};
@@ -361,7 +458,6 @@ export default function CatSplash({ onDone }) {
           transition: opacity ${GREET_FADE}ms ease;
         }
 
-        /* ── Namaste arm states ── */
         .cs-pray-left {
           transform-origin: 66px 192px;
           opacity: ${prayRetract ? 0 : prayVisible ? 1 : 0};
@@ -394,7 +490,7 @@ export default function CatSplash({ onDone }) {
           style={{ opacity: inkPhase !== "idle" ? 0 : 1 }} 
         />
 
-        {/* Tight irregular paw-spot glow — fades out before ink */}
+        {/* Tight irregular paw-spot glow */}
         <div
           className="cs-glow-paw"
           style={{ opacity: prayPhase === "retracting" ? 0 : 1 }}
@@ -477,9 +573,7 @@ export default function CatSplash({ onDone }) {
               ))}
             </g>
 
-            {/* ── NAMASTE ARMS & COMPLEMENTARY PAWS GESTURE ── */}
-
-            {/* Left sleeve/arm curve transitioning smoothly to center alignment */}
+            {/* NAMASTE ARMS */}
             <g className="cs-pray-left">
               <path
                 d="M66,192 Q74,178 94,170 Q104,166 110,158"
@@ -488,7 +582,6 @@ export default function CatSplash({ onDone }) {
               />
             </g>
 
-            {/* Right sleeve/arm curve mirroring left path */}
             <g className="cs-pray-right">
               <path
                 d="M154,192 Q146,178 126,170 Q116,166 110,158"
@@ -497,50 +590,38 @@ export default function CatSplash({ onDone }) {
               />
             </g>
 
-            {/* Detailed joined hands layered directly onto the center vertex (x=110) */}
+            {/* Paws Gesture */}
             <g
               className="cs-paws-group"
               style={{ opacity: prayVisible ? 1 : 0 }}
               filter="url(#pawGlow)"
             >
-              {/* Soft cosmic outer alignment ring - adapted to matching purple */}
               <circle cx="110" cy="158" r="15" fill="none" stroke="rgba(147, 51, 234, 0.35)" strokeWidth="3.5"/>
-              
-              {/* Primary structural pad bases */}
               <circle cx="105" cy="158" r="9" fill="#a8b8cc"/>
               <circle cx="115" cy="158" r="9" fill="#a8b8cc"/>
-              
-              {/* Realistic interior depth shading overlay */}
               <circle cx="105" cy="158" r="7.5" fill="#8a9aad" />
               <circle cx="115" cy="158" r="7.5" fill="#8a9aad" />
-
-              {/* Specular high-points for stylized 3D volume */}
               <circle cx="102" cy="155" r="2.5" fill="rgba(255,255,255,0.55)"/>
               <circle cx="112" cy="155" r="2.5" fill="rgba(255,255,255,0.55)"/>
-
-              {/* Unified centerline seam separation */}
               <line x1="110" y1="148" x2="110" y2="168" stroke="#4a5a6d" strokeWidth="1.6" strokeLinecap="round"/>
-
-              {/* Balanced alignment of structural toe knuckles */}
               <circle cx="104" cy="149" r="3" fill="#a8b8cc"/>
               <circle cx="110" cy="147.5" r="3" fill="#a8b8cc"/>
               <circle cx="116" cy="149" r="3" fill="#a8b8cc"/>
             </g>
 
-            {/* ── HEAD ── */}
+            {/* HEAD */}
             <circle cx="110" cy="90" r="74" fill="#111622" />
 
-            {/* left ear */}
+            {/* ears */}
             <path d="M52,44 Q38,6 68,22 Q72,26 66,38 Z"  fill="#111622" />
             <path d="M55,40 Q44,12 65,24 Q68,28 64,37 Z"  fill="#3a2232" />
 
-            {/* right ear (twitches) */}
             <g className="cs-ear-r">
               <path d="M168,44 Q182,6 152,22 Q148,26 154,38 Z" fill="#111622" />
               <path d="M165,40 Q176,12 155,24 Q152,28 156,37 Z" fill="#3a2232" />
             </g>
 
-            {/* blush cheeks */}
+            {/* cheeks */}
             <ellipse className="cs-blush" cx="64"  cy="110" rx="18" ry="11" fill="#e53e3e" />
             <ellipse className="cs-blush" cx="156" cy="110" rx="18" ry="11" fill="#e53e3e" />
 
@@ -557,7 +638,7 @@ export default function CatSplash({ onDone }) {
               <circle  cx="129" cy="94" r="2"   fill="white" opacity="0.55" />
             </g>
 
-            {/* nose & mouth */}
+            {/* face details */}
             <path d="M107,114 Q110,110 113,114 Q117,118 110,124 Q103,118 107,114 Z" fill="#f687b3" />
             <path d="M102,124 Q106,130 110,126 Q114,130 118,124"
               stroke="#f687b3" strokeWidth="1.6" fill="none"
@@ -572,12 +653,26 @@ export default function CatSplash({ onDone }) {
             <line x1="186" y1="121" x2="128" y2="121" stroke="#ffffff" strokeWidth="1.1" opacity="0.28" />
             <line x1="182" y1="130" x2="128" y2="125" stroke="#ffffff" strokeWidth="0.9" opacity="0.18" />
 
-            {/* crown / antenna */}
+            {/* crown */}
             <path d="M103,20 Q107,11 110,18" stroke="#1a202c" strokeWidth="2.2" fill="none" strokeLinecap="round" />
             <path d="M110,18 Q113,9  117,18" stroke="#1a202c" strokeWidth="2.2" fill="none" strokeLinecap="round" />
 
-          </g>{/* end cs-cat-bow */}
+          </g>
         </svg>
+
+        {/* ── Typography and Progress UI Stack ── */}
+        <div className="cs-terminal-layout">
+          {/* Enhanced Bold Heading with Left-to-Right Reveal */}
+          <h1 className="cs-title-name">Tushar Parihast</h1>
+          
+          {/* Status Context Subtitle */}
+          <span className="cs-sub-status">initializing...</span>
+          
+          {/* Flawlessly Synced Progress Loading Tracker */}
+          <div className="cs-loading-wrapper">
+            <div className="cs-loading-bar" />
+          </div>
+        </div>
       </div>
     </>
   );
